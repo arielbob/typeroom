@@ -1,5 +1,6 @@
 import React from 'react'
 import SocketContext from './SocketContext'
+import GameText from './GameText'
 import TypeInput from './TypeInput'
 import PlayerList from './PlayerList'
 
@@ -7,7 +8,9 @@ class Root extends React.Component {
   render() {
     return (
       <div>
-        <p>Hello, world!</p>
+        <SocketContext.Consumer>
+          { socket => <GameText socket={socket} /> }
+        </SocketContext.Consumer>
         <SocketContext.Consumer>
           { socket => <TypeInput socket={socket} /> }
         </SocketContext.Consumer>

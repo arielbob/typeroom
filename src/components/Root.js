@@ -10,7 +10,8 @@ class Root extends React.Component {
     this.state = {
       playersById: {},
       text: '',
-      inputValue: ''
+      inputValue: '',
+      id: null
     }
   }
 
@@ -28,6 +29,12 @@ class Root extends React.Component {
   componentDidMount() {
     const { socket } = this.props
 
+    // client connect
+    socket.on('connect', () => {
+      this.setState({ id: socket.id })
+    })
+
+    // other player connects
     socket.on('connection', (id) => {
       console.log('user joined', newState)
       // add new player to state
@@ -86,7 +93,7 @@ class Root extends React.Component {
       <div>
         <GameText text={this.state.text} />
         <TypeInput value={this.state.inputValue} handleChange={(value) => this.handleChange(value)} />
-        <PlayerList playersById={this.state.playersById} textLength={this.state.text.split(' ').length} />
+        <PlayerList clientId={this.state.id} playersById={this.state.playersById} textLength={this.state.text.split(' ').length} />
       </div>
     )
   }

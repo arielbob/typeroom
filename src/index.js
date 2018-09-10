@@ -10,7 +10,9 @@ const socket = io()
 
 render(
   <SocketContext.Provider value={socket}>
-    <Root />
+    <SocketContext.Consumer>
+      {socket => <Root socket={socket} />}
+    </SocketContext.Consumer>
   </SocketContext.Provider>,
   document.getElementById('root')
 )

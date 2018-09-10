@@ -15,15 +15,17 @@ app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath
 }))
 
-let playersById = {}
 let text = 'Type me :)'
+let wordArray = text.split(' ')
+let numWinners = 0
+let playersById = {}
 
 io.on('connection', (socket) => {
   console.log('A user connected...')
 
   socket.emit('players', playersById) // send to connected client the player list
   playersById[socket.id] = {
-    words: '',
+    nextWordId: 0,
     id: socket.id
   }
 
@@ -35,10 +37,15 @@ io.on('connection', (socket) => {
     console.log('word input: ' + word)
     // should probably check if the word is valid (i.e. it's the next word of the text that needs to be typed)
     // also don't think we even need to send the words; we just need to send their progress
-    const { words } = playersById[socket.id]
-    playersById[socket.id].words = words ? words + word : word
+    const { nextWordId } = playersById[socket.id]
+    console.log(word, wordArray[nextWordId])
+    if (word.trim() == wordArray[nextWordId]) {
+      playersById[socket.id].nextWordId++
+      socket.broadcast.emit('progress', socket.id, playersById[socket.id].nextWordId)
+    }
+    // playersById[socket.id].words = words ? words + word : word
 
-    socket.broadcast.emit('word input', socket.id, word)
+    // socket.broadcast.emit('word input', socket.id, word)
   })
 
   socket.on('disconnecting', () => {

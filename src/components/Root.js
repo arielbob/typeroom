@@ -55,16 +55,6 @@ class Root extends React.Component {
       })
     })
 
-    // socket.on('word input', (id, word) => {
-    //   const { words } = this.state.playersById[id]
-    //   let newState = Object.assign({}, this.state.playersById)
-    //   newState[id] = Object.assign({}, newState[id], {
-    //     words: words ? words + word : word
-    //   })
-    //   console.log('someone typed', newState)
-    //   this.setState({ playersById: newState })
-    // })
-
     socket.on('progress', (id, nextWordId) => {
       let newState = Object.assign({}, this.state.playersById)
       newState[id].nextWordId = nextWordId
@@ -88,12 +78,21 @@ class Root extends React.Component {
     })
   }
 
+  createRoom() {
+    fetch('/create', {
+      method: 'post'
+    }).then(res => {
+      if (res.redirected) window.location.href = res.url
+    })
+  }
+
   render() {
     return (
       <div>
-        <GameText text={this.state.text} />
+        {/* <GameText text={this.state.text} />
         <TypeInput value={this.state.inputValue} handleChange={(value) => this.handleChange(value)} />
-        <PlayerList clientId={this.state.id} playersById={this.state.playersById} textLength={this.state.text.split(' ').length} />
+        <PlayerList clientId={this.state.id} playersById={this.state.playersById} textLength={this.state.text.split(' ').length} /> */}
+        <button onClick={() => this.createRoom()}>Create Room</button>
       </div>
     )
   }

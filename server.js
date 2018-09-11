@@ -15,6 +15,26 @@ app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath
 }))
 
+let rooms = {}
+let numRooms = 0
+
+app.post('/create', (req, res) => {
+  const roomId = numRooms++
+  rooms[roomId] = {
+    text: 'Type this text from room ' + roomId,
+    numWinners: 0,
+    playersById: {}
+  }
+
+  console.log('Room created:', rooms[roomId])
+
+  res.redirect('/room/' + roomId)
+})
+
+app.get('/room/:id', (req, res) => {
+  res.status(200).send('Welcome to room ' + req.params.id)
+})
+
 let text = 'Type me :)'
 let wordArray = text.split(' ')
 let numWinners = 0

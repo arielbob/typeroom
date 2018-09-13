@@ -40,14 +40,19 @@ let wordArray = text.split(' ')
 let numWinners = 0
 let playersById = {}
 
+// TODO: handle sending messages to only certain rooms
 io.on('connection', (socket) => {
   console.log('A user connected...')
-  playersById[socket.id] = {
-    nextWordId: 0,
-    id: socket.id
+  if (!playersById.hasOwnProperty(socket.id)) {
+    playersById[socket.id] = {
+      username: socket.id, // TODO: get username from db
+      nextWordId: 0,
+      place: null,
+      id: socket.id
+    }
   }
 
-  socket.broadcast.emit('connection', socket.id) // send to everyone else that a new player joined
+  socket.broadcast.emit('connection', playersById[socket.id]) // send to everyone else that a new player joined
   socket.emit('text', text)
   socket.emit('players', playersById) // send to connected client the player list
 

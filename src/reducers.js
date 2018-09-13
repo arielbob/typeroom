@@ -35,7 +35,7 @@ const clientId = (state = null, action) => {
 const currentRoomId = (state = null, action) => {
   switch (action.type) {
     case 'OPEN_ROOM':
-      return action.payload.id
+      return state ? action.payload.id : null
     default:
       return state
   }

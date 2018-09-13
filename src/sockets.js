@@ -2,6 +2,7 @@ import io from 'socket.io-client'
 import {
   setClientId,
   addPlayer,
+  removePlayer,
   setAllPlayers,
   setNextWordId,
   setGameText
@@ -49,6 +50,9 @@ const eventHandlers = {
   },
   text: (dispatch, state, text) => {
     dispatch(setGameText(text))
+  },
+  disconnect: (dispatch, state, id) => {
+    dispatch(removePlayer(id))
   }
 }
 

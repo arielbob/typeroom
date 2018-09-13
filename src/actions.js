@@ -82,6 +82,15 @@ export const addPlayer = (player) => ({
   }
 })
 
+// NOTE: i think this will be unnecessary in the future when we have constant IDs instead of IDs given to us
+// by the socket
+export const removePlayer = (id) => ({
+  type: 'REMOVE_PLAYER',
+  payload: {
+    id
+  }
+})
+
 export const setNextWordId = (id, nextWordId) => ({
   type: 'SET_NEXT_WORD_ID',
   payload: {

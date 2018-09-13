@@ -10,13 +10,13 @@ import { combineReducers } from 'redux'
 //   playersById: {
 //     0: {
 //       username: 'player1',
-//       progress: 0,
+//       nextWordId: 0,
 //       id: 0,
 //       place: null
 //     },
 //     1: {
 //       username: 'player2',
-//       progress: 0.5,
+//       nextWordId: 2,
 //       id: 1,
 //       place: null
 //     }
@@ -69,6 +69,8 @@ const player = (state = {}, action) => {
         ...action.payload
       }
       break;
+    case 'REMOVE_PLAYER':
+      return null
     default:
       return state
   }
@@ -79,6 +81,7 @@ const playersById = (state = {}, action) => {
     case 'SET_ALL_PLAYERS':
       return action.payload.playersById
     case 'ADD_PLAYER':
+    case 'REMOVE_PLAYER':
     case 'SET_NEXT_WORD_ID':
     case 'SET_PLACE':
       return {

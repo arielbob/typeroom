@@ -23,6 +23,15 @@ import { combineReducers } from 'redux'
 //   }
 // }
 
+const clientId = (state = null, action) => {
+  switch (action.type) {
+    case 'SET_CLIENT_ID':
+      return action.payload.clientId
+    default:
+      return state
+  }
+}
+
 const currentRoomId = (state = null, action) => {
   switch (action.type) {
     case 'OPEN_ROOM':
@@ -36,6 +45,15 @@ const gameText = (state = '', action) => {
   switch (action.type) {
     case 'SET_GAME_TEXT':
       return action.payload.text
+    default:
+      return state
+  }
+}
+
+const inputValue = (state = '', action) => {
+  switch (action.type) {
+    case 'SET_INPUT_VALUE':
+      return action.payload.inputValue
     default:
       return state
   }
@@ -73,8 +91,10 @@ const playersById = (state = {}, action) => {
 }
 
 const rootReducer = combineReducers({
+  clientId,
   currentRoomId,
   gameText,
+  inputValue,
   playersById
 })
 

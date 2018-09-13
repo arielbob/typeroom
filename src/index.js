@@ -2,6 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import SocketContext from './components/SocketContext'
 import Root from './components/Root'
+import { Provider } from 'react-redux'
 // import io from 'socket.io-client'
 // const socket = io()
 
@@ -46,11 +47,9 @@ store.dispatch(setProgress(0, 0.2))
 store.dispatch(setProgress(1, 1))
 store.dispatch(setPlace(1, 1))
 
-// render(
-//   <SocketContext.Provider value={socket}>
-//     <SocketContext.Consumer>
-//       {socket => <Root socket={socket} />}
-//     </SocketContext.Consumer>
-//   </SocketContext.Provider>,
-//   document.getElementById('root')
-// )
+render(
+  <Provider store={store}>
+    <Root />
+  </Provider>,
+  document.getElementById('root')
+)

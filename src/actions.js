@@ -2,15 +2,24 @@ import io from 'socket.io-client'
 
 let socket = null
 
-export const openRoom = (id) => (dispatch) => {
+// TODO: add socket integration
+// TODO: add text highlighting for correct/incorrect typing
+// TODO: add WPM
+
+export const setClientId = (clientId) => ({
+  type: 'SET_CLIENT_ID',
+  payload: {
+    clientId
+  }
+})
+
+export const openRoom = (id) => {
   socket = io('/' + id)
 
-  dispatch({
+  return {
     type: 'OPEN_ROOM',
-    payload: {
-      id
-    }
-  })
+    payload: { id }
+  }
 }
 
 export const setGameText = (text) => ({
@@ -19,6 +28,25 @@ export const setGameText = (text) => ({
     text
   }
 })
+
+export const setInputValue = (inputValue) => (dispatch) => {
+  const spaceEntered = inputValue.charAt(inputValue.length - 1) === ' '
+
+  if (spaceEntered) {
+    if (inputValue.trim().length > 0) {
+      // this.props.socket.emit('word input', inputValue)
+      dispatch({
+        type: 'SET_INPUT_VALUE',
+        payload: { inputValue: '' }
+      })
+    }
+  } else {
+    dispatch({
+      type: 'SET_INPUT_VALUE',
+      payload: { inputValue }
+    })
+  }
+}
 
 export const setAllPlayers = (playersById) => ({
   type: 'SET_ALL_PLAYERS',

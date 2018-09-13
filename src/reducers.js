@@ -62,7 +62,7 @@ const inputValue = (state = '', action) => {
 const player = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_PLAYER':
-    case 'SET_PROGRESS':
+    case 'SET_NEXT_WORD_ID':
     case 'SET_PLACE':
       return {
         ...state,
@@ -79,7 +79,7 @@ const playersById = (state = {}, action) => {
     case 'SET_ALL_PLAYERS':
       return action.payload.playersById
     case 'ADD_PLAYER':
-    case 'SET_PROGRESS':
+    case 'SET_NEXT_WORD_ID':
     case 'SET_PLACE':
       return {
         ...state,

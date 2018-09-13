@@ -72,11 +72,11 @@ export const addPlayer = (player) => ({
   }
 })
 
-export const setProgress = (id, progress) => ({
-  type: 'SET_PROGRESS',
+export const setNextWordId = (id, nextWordId) => ({
+  type: 'SET_NEXT_WORD_ID',
   payload: {
     id,
-    progress
+    nextWordId
   }
 })
 

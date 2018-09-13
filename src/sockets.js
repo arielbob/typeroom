@@ -5,11 +5,13 @@ import {
   removePlayer,
   setAllPlayers,
   setNextWordId,
-  setGameText
+  setGameText,
+  setPlace
 } from './actions'
 
 let socket = null
 
+// sending socket events via redux actions
 export const socketMiddleware = (store) => (next) => (action) => {
   if (action.type === 'OPEN_ROOM') {
     const { id } = action.payload
@@ -27,6 +29,7 @@ export const socketMiddleware = (store) => (next) => (action) => {
   return next(action)
 }
 
+// receiving events
 const eventHandlers = {
   connect: (dispatch) => {
     console.log('connected to socket')
@@ -47,6 +50,9 @@ const eventHandlers = {
   // or mayve just have the server send it so that it's for sure in sync
   progress: (dispatch, state, id, nextWordId) => {
     dispatch(setNextWordId(id, nextWordId))
+  },
+  place: (dispatch, state, id, place) => {
+    dispatch(setPlace(id, place))
   },
   text: (dispatch, state, text) => {
     dispatch(setGameText(text))

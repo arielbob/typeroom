@@ -41,6 +41,7 @@ let numWinners = 0
 let playersById = {}
 
 // TODO: handle sending messages to only certain rooms
+// TODO: add resetting the game
 io.on('connection', (socket) => {
   console.log('A user connected...')
   if (!playersById.hasOwnProperty(socket.id)) {
@@ -65,6 +66,9 @@ io.on('connection', (socket) => {
         // send everyone their progress (including sender)
         io.emit('progress', socket.id, playersById[socket.id].nextWordId)
         // socket.broadcast.emit('progress', socket.id, playersById[socket.id].nextWordId)
+        if (playersById[socket.id].nextWordId == wordArray.length) {
+          io.emit('place', socket.id, ++numWinners)
+        }
       }
     }
   })

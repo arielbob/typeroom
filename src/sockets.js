@@ -1,5 +1,11 @@
 import io from 'socket.io-client'
-import { setClientId, addPlayer } from './actions'
+import {
+  setClientId,
+  addPlayer,
+  setAllPlayers,
+  setNextWordId,
+  setGameText
+} from './actions'
 
 let socket = null
 
@@ -11,8 +17,11 @@ export const socketMiddleware = (store) => (next) => (action) => {
     initSockets(socket, store)
   }
 
-  // if (socket) {
-  // }
+  if (socket) {
+    if (action.type === 'INPUT_WORD') {
+      socket.emit('word input', action.payload.word)
+    }
+  }
 
   return next(action)
 }
@@ -22,7 +31,6 @@ const eventHandlers = {
     console.log('connected to socket')
     dispatch(setClientId(socket.id))
   },
-  // TODO: test this and also rewrite the server emit to send a player object
   connection: (dispatch, state, player) => {
     console.log('user joined')
 
@@ -30,6 +38,17 @@ const eventHandlers = {
     if (!state.playersById[player.id]) {
       dispatch(addPlayer(player))
     }
+  },
+  players: (dispatch, state, playersById) => {
+    dispatch(setAllPlayers(playersById))
+  },
+  // NOTE: could have placing here or in the server and have the server emit a setPlace event
+  // or mayve just have the server send it so that it's for sure in sync
+  progress: (dispatch, state, id, nextWordId) => {
+    dispatch(setNextWordId(id, nextWordId))
+  },
+  text: (dispatch, state, text) => {
+    dispatch(setGameText(text))
   }
 }
 
@@ -38,40 +57,6 @@ const initSockets = (socket, store) => {
     socket.on(handler, eventHandlers[handler].bind(null, store.dispatch, store.getState()))
   }
 
-  // // client connect
-  // socket.on('connect', () => {
-  //   this.setState({ id: socket.id })
-  // })
-  //
-  // // other player connects
-  // socket.on('connection', (id) => {
-  //   console.log('user joined', newState)
-  //   // add new player to state
-  //   let newState = Object.assign({}, this.state.playersById)
-  //   newState[id] = {
-  //     nextWordId: 0,
-  //     id
-  //   }
-  //   this.setState({
-  //     playersById: newState
-  //   })
-  // })
-  //
-  // socket.on('players', (playersById) => {
-  //   console.log(playersById)
-  //   this.setState({
-  //     playersById
-  //   })
-  // })
-  //
-  // socket.on('progress', (id, nextWordId) => {
-  //   let newState = Object.assign({}, this.state.playersById)
-  //   newState[id].nextWordId = nextWordId
-  //   this.setState({
-  //     playersById: newState
-  //   })
-  // })
-  //
   // socket.on('disconnect', (id) => {
   //   // console.log('someone disconnected')
   //   let newState = Object.assign({}, this.state.playersById)
@@ -80,9 +65,5 @@ const initSockets = (socket, store) => {
   //   this.setState({
   //     playersById: newState
   //   })
-  // })
-  //
-  // socket.on('text', (text) => {
-  //   this.setState({ text })
   // })
 }

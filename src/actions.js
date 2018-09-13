@@ -7,26 +7,13 @@ import io from 'socket.io-client'
 // that go through the socket middleware
 // we can use this socket middleware with thunk for conditional dispatches
 
-export const setClientId = (clientId) => ({
-  type: 'SET_CLIENT_ID',
-  payload: {
-    clientId
-  }
-})
-
+// socket emitting actions
 export const openRoom = (id) => {
   return {
     type: 'OPEN_ROOM',
     payload: { id }
   }
 }
-
-export const setGameText = (text) => ({
-  type: 'SET_GAME_TEXT',
-  payload: {
-    text
-  }
-})
 
 export const setInputValue = (inputValue) => (dispatch) => {
   const spaceEntered = inputValue.charAt(inputValue.length - 1) === ' '
@@ -38,6 +25,13 @@ export const setInputValue = (inputValue) => (dispatch) => {
         type: 'SET_INPUT_VALUE',
         payload: { inputValue: '' }
       })
+
+      dispatch({
+        type: 'INPUT_WORD',
+        payload: {
+          word: inputValue.trim()
+        }
+      })
     }
   } else {
     dispatch({
@@ -46,6 +40,22 @@ export const setInputValue = (inputValue) => (dispatch) => {
     })
   }
 }
+
+// socket receiving actions and non-socket actions
+export const setClientId = (clientId) => ({
+  type: 'SET_CLIENT_ID',
+  payload: {
+    clientId
+  }
+})
+
+export const setGameText = (text) => ({
+  type: 'SET_GAME_TEXT',
+  payload: {
+    text
+  }
+})
+
 
 export const setAllPlayers = (playersById) => ({
   type: 'SET_ALL_PLAYERS',

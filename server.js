@@ -15,7 +15,15 @@ app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath
 }))
 
-let rooms = {}
+const text = 'Type me :)'
+let rooms = {
+  0: {
+    text,
+    wordArray: text.split(' '),
+    numWinners: 0,
+    playersById: {}
+  }
+}
 let numRooms = 0
 
 app.post('/create', (req, res) => {
@@ -35,15 +43,24 @@ app.get('/room/:id', (req, res) => {
   res.status(200).send('Welcome to room ' + req.params.id)
 })
 
-let text = 'Type me :)'
-let wordArray = text.split(' ')
-let numWinners = 0
-let playersById = {}
+// let text = 'Type me :)'
+// let wordArray = text.split(' ')
+// let numWinners = 0
+// let playersById = {}
 
-// TODO: handle sending messages to only certain rooms
 // TODO: add resetting the game
 io.on('connection', (socket) => {
-  console.log('A user connected...')
+  const { id: roomId } = socket.handshake.query
+  console.log('A user connected to room', roomId)
+  socket.join(roomId)
+
+  if (!rooms.hasOwnProperty(roomId)) {
+    socket.emit('serverError', 'Room does not exist!')
+    socket.disconnect()
+    return
+  }
+
+  let { text, wordArray, numWinners, playersById } = rooms[roomId]
   if (!playersById.hasOwnProperty(socket.id)) {
     playersById[socket.id] = {
       username: socket.id, // TODO: get username from db
@@ -53,7 +70,9 @@ io.on('connection', (socket) => {
     }
   }
 
-  socket.broadcast.emit('connection', playersById[socket.id]) // send to everyone else that a new player joined
+  console.log(rooms)
+
+  socket.to(roomId).emit('connection', playersById[socket.id]) // send to everyone else that a new player joined
   socket.emit('text', text)
   socket.emit('players', playersById) // send to connected client the player list
 
@@ -63,11 +82,10 @@ io.on('connection', (socket) => {
       console.log(word, wordArray[nextWordId])
       if (word.trim() == wordArray[nextWordId]) {
         playersById[socket.id].nextWordId++
-        // send everyone their progress (including sender)
-        io.emit('progress', socket.id, playersById[socket.id].nextWordId)
-        // socket.broadcast.emit('progress', socket.id, playersById[socket.id].nextWordId)
+        // send the progress of whoever just typed a word to everyone in the room (including the typer)
+        io.to(roomId).emit('progress', socket.id, playersById[socket.id].nextWordId)
         if (playersById[socket.id].nextWordId == wordArray.length) {
-          io.emit('place', socket.id, ++numWinners)
+          io.to(roomId).emit('place', socket.id, ++numWinners)
         }
       }
     }
@@ -77,7 +95,7 @@ io.on('connection', (socket) => {
     console.log('A user disconnected...');
     playersById[socket.id] = undefined
 
-    io.sockets.emit('disconnect', socket.id)
+    io.to(roomId).emit('disconnect', socket.id)
   })
 })
 

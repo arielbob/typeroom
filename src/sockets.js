@@ -15,8 +15,11 @@ let socket = null
 export const socketMiddleware = (store) => (next) => (action) => {
   if (action.type === 'OPEN_ROOM') {
     const { id } = action.payload
+
     console.log('connecting to socket')
-    socket = io('/' + (id ? id : ''))
+    socket = io({
+      query: { id }
+    })
     initSockets(socket, store)
   }
 
@@ -58,7 +61,12 @@ const eventHandlers = {
     dispatch(setGameText(text))
   },
   disconnect: (dispatch, state, id) => {
+    console.log('disconnected from socket')
     dispatch(removePlayer(id))
+  },
+  serverError: (dispatch, state, error) => {
+    console.log(error)
+    dispatch({ type: 'ERROR', error })
   }
 }
 

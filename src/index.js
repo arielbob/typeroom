@@ -30,7 +30,7 @@ const store = createStore(
   )
 )
 
-store.dispatch(openRoom())
+store.dispatch(openRoom(0))
 store.dispatch(setGameText('Type this text!'))
 // store.dispatch(setAllPlayers({
 //   0: {

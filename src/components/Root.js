@@ -1,5 +1,5 @@
 import React from 'react'
-import SocketContext from './SocketContext'
+import ErrorMessage from '../containers/ErrorMessage'
 import GameTextContainer from '../containers/GameTextContainer'
 import TypeInputContainer from '../containers/TypeInputContainer'
 import PlayerListContainer from '../containers/PlayerListContainer'
@@ -68,6 +68,7 @@ class Root extends React.Component {
   render() {
     return (
       <div>
+        <ErrorMessage />
         <GameTextContainer />
         <TypeInputContainer />
         <PlayerListContainer />

@@ -23,6 +23,19 @@ import { combineReducers } from 'redux'
 //   }
 // }
 
+const errorMessage = (state = '', action) => {
+  const { type, error } = action
+
+  switch (type) {
+    case 'SET_CLIENT_ID':
+      return ''
+  }
+
+  if (error) return error
+
+  return state
+}
+
 const clientId = (state = null, action) => {
   switch (action.type) {
     case 'SET_CLIENT_ID':
@@ -94,6 +107,7 @@ const playersById = (state = {}, action) => {
 }
 
 const rootReducer = combineReducers({
+  errorMessage,
   clientId,
   currentRoomId,
   gameText,

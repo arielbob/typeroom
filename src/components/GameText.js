@@ -1,7 +1,9 @@
 import React from 'react'
 
-const GameText = ({ text }) => (
-  <p>{text ? text : 'Loading text...'}</p>
+const GameText = ({ text, isVisible }) => (
+  isVisible ?
+  <p>{text ? text : 'Loading text...'}</p> :
+  null
 )
 
 export default GameText

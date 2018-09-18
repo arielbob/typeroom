@@ -1,8 +1,9 @@
 import { connect } from 'react-redux'
 import GameText from '../components/GameText'
 
-const mapStateToProps = ({ gameText }) => ({
-  text: gameText
+const mapStateToProps = ({ gameText, errorMessage }) => ({
+  text: gameText,
+  isVisible: !errorMessage
 })
 
 export default connect(mapStateToProps)(GameText)

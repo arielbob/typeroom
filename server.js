@@ -22,6 +22,12 @@ let rooms = {
     wordArray: text.split(' '),
     numWinners: 0,
     playersById: {}
+  },
+  1: {
+    text: 'This is the text from room 1',
+    wordArray: 'This is the text from room 1'.split(' '),
+    numWinners: 0,
+    playersById: {}
   }
 }
 let numRooms = 0
@@ -60,7 +66,7 @@ io.on('connection', (socket) => {
     return
   }
 
-  let { text, wordArray, numWinners, playersById } = rooms[roomId]
+  let { text, wordArray, playersById } = rooms[roomId]
   if (!playersById.hasOwnProperty(socket.id)) {
     playersById[socket.id] = {
       username: socket.id, // TODO: get username from db
@@ -85,7 +91,7 @@ io.on('connection', (socket) => {
         // send the progress of whoever just typed a word to everyone in the room (including the typer)
         io.to(roomId).emit('progress', socket.id, playersById[socket.id].nextWordId)
         if (playersById[socket.id].nextWordId == wordArray.length) {
-          io.to(roomId).emit('place', socket.id, ++numWinners)
+          io.to(roomId).emit('place', socket.id, ++rooms[roomId].numWinners)
         }
       }
     }

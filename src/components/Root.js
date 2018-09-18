@@ -1,62 +1,12 @@
 import React from 'react'
-import ErrorMessage from '../containers/ErrorMessage'
-import GameTextContainer from '../containers/GameTextContainer'
-import TypeInputContainer from '../containers/TypeInputContainer'
-import PlayerListContainer from '../containers/PlayerListContainer'
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from 'react-router-dom'
+import RoomContainer from '../containers/RoomContainer'
 
 class Root extends React.Component {
-  // componentDidMount() {
-  //   const { socket } = this.props
-  //
-  //   // client connect
-  //   socket.on('connect', () => {
-  //     this.setState({ id: socket.id })
-  //   })
-  //
-  //   // other player connects
-  //   socket.on('connection', (id) => {
-  //     console.log('user joined', newState)
-  //     // add new player to state
-  //     let newState = Object.assign({}, this.state.playersById)
-  //     newState[id] = {
-  //       nextWordId: 0,
-  //       id
-  //     }
-  //     this.setState({
-  //       playersById: newState
-  //     })
-  //   })
-  //
-  //   socket.on('players', (playersById) => {
-  //     console.log(playersById)
-  //     this.setState({
-  //       playersById
-  //     })
-  //   })
-  //
-  //   socket.on('progress', (id, nextWordId) => {
-  //     let newState = Object.assign({}, this.state.playersById)
-  //     newState[id].nextWordId = nextWordId
-  //     this.setState({
-  //       playersById: newState
-  //     })
-  //   })
-  //
-  //   socket.on('disconnect', (id) => {
-  //     // console.log('someone disconnected')
-  //     let newState = Object.assign({}, this.state.playersById)
-  //     newState[id] = undefined
-  //     console.log('user left', newState)
-  //     this.setState({
-  //       playersById: newState
-  //     })
-  //   })
-  //
-  //   socket.on('text', (text) => {
-  //     this.setState({ text })
-  //   })
-  // }
-
   createRoom() {
     fetch('/create', {
       method: 'post'
@@ -67,13 +17,13 @@ class Root extends React.Component {
 
   render() {
     return (
-      <div>
-        <ErrorMessage />
-        <GameTextContainer />
-        <TypeInputContainer />
-        <PlayerListContainer />
-        {/* <button onClick={() => this.createRoom()}>Create Room</button> */}
-      </div>
+      <Router>
+        <div>
+          <Route exact path='/' render={() => <h2>Welcome to TypeRoom.</h2>}></Route>
+          <Route path='/room/:id' component={RoomContainer} />
+          {/* <button onClick={() => this.createRoom()}>Create Room</button> */}
+        </div>
+      </Router>
     )
   }
 }

@@ -2,6 +2,7 @@ const express = require('express')
 const morgan = require('morgan')
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
+const history = require('connect-history-api-fallback');
 const config = require('./webpack.dev.js')
 
 const compiler = webpack(config)
@@ -10,7 +11,7 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http)
 
 app.use(morgan('dev'))
-
+app.use(history())
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath
 }))
@@ -45,9 +46,9 @@ app.post('/create', (req, res) => {
   res.redirect('/room/' + roomId)
 })
 
-app.get('/room/:id', (req, res) => {
-  res.status(200).send('Welcome to room ' + req.params.id)
-})
+// app.get('/room/:id', (req, res) => {
+//   res.status(200).send('Welcome to room ' + req.params.id)
+// })
 
 // let text = 'Type me :)'
 // let wordArray = text.split(' ')

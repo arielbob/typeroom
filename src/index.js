@@ -1,10 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
-import SocketContext from './components/SocketContext'
 import Root from './components/Root'
 import { Provider } from 'react-redux'
-// import io from 'socket.io-client'
-// const socket = io()
 
 import { createStore, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'

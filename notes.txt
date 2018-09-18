@@ -1,0 +1,21 @@
+components should be able to dispatch actions that get sent to the socket
+but where do we store the socket?
+we could store it in actions maybe?
+
+i think we should use custom middleware
+this is how it will go:
+  - the client will be able to join a game and set their current game id to the game's id
+  - we attempt to connect to the socket and that socket is stored in actions
+  - then we can dispatch any action and also emit to the socket
+  - note that we should check if they're connected to the socket before emitting
+  - to prevent code duplication, we can put this check in middleware
+
+TODO: test joining other rooms - DONE
+TODO: add joining rooms via url - DONE
+TODO: add user database
+TODO: register
+TODO: login
+TODO: authentication
+TODO: text highlighting
+TODO: add isRacing to users
+TODO: don't remove racers on disconnect

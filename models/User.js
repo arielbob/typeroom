@@ -42,7 +42,15 @@ userSchema.statics.authenticate = function(email, password) {
       }
 
       bcrypt.compare(password, user.password, function(err, result) {
-        return result ? resolve(result) : reject(err)
+        if (err) return reject(err)
+
+        if (result) {
+          return resolve(user)
+        } else {
+          const err = new Error('Incorrect username or password')
+          err.status = 401
+          return reject(err)
+        }
       })
     })
   })

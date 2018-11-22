@@ -39,7 +39,7 @@ router.post('/login', function(req, res, next) {
     User.authenticate(email, password)
       .then(user => {
         req.session.userId = user._id
-        res.redirect('/')
+        res.redirect('/profile')
       })
       .catch(next)
   } else {
@@ -50,17 +50,19 @@ router.post('/login', function(req, res, next) {
 })
 
 router.post('/logout', function(req, res, next) {
-  if (req.session) {
-    req.session.destroy()
-      .then(() => res.redirect('/'))
-      .catch(next)
+  if (req.session.userId) {
+    req.session.destroy(err => {
+      if (err) return next()
+    })
   }
+
+  res.redirect('/')
 })
 
 router.get('/profile', function(req, res, next) {
   if (req.session.userId) {
     User.findById(req.session.userId).exec()
-      .then(() => res.json({
+      .then(user => res.json({
         username: user.username,
         email: user.email
       }))

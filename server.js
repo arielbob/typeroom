@@ -1,16 +1,45 @@
 const express = require('express')
 const morgan = require('morgan')
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+const session = require('express-session')
+
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
-const history = require('connect-history-api-fallback');
+const history = require('connect-history-api-fallback')
 const config = require('./webpack.dev.js')
 
 const compiler = webpack(config)
 const app = express()
-const http = require('http').Server(app);
+const http = require('http').Server(app)
 const io = require('socket.io')(http)
 
+const accounts = require('./routes/accounts')
+
+require('dotenv').config()
+
+// connect to db
+mongoose.connect('mongodb://localhost/typeroom', {
+  useNewUrlParser: true
+})
+const db = mongoose.connection
+db.on('error', console.error.bind(console, 'connection error:'))
+db.once('open', () => {
+  console.log('connected to db')
+})
+
 app.use(morgan('dev'))
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}))
+
+app.use(accounts)
+
 app.use(history())
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath
@@ -45,15 +74,6 @@ app.post('/create', (req, res) => {
 
   res.redirect('/room/' + roomId)
 })
-
-// app.get('/room/:id', (req, res) => {
-//   res.status(200).send('Welcome to room ' + req.params.id)
-// })
-
-// let text = 'Type me :)'
-// let wordArray = text.split(' ')
-// let numWinners = 0
-// let playersById = {}
 
 // TODO: add resetting the game
 io.on('connection', (socket) => {

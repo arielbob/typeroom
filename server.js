@@ -33,14 +33,15 @@ app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-app.use(session({
+const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store: new MongoStore({
     mongooseConnection: db
   })
-}))
+})
+app.use(sessionMiddleware)
 
 app.use(accounts)
 
@@ -77,6 +78,11 @@ app.post('/create', (req, res) => {
   console.log('Room created:', rooms[roomId])
 
   res.redirect('/room/' + roomId)
+})
+
+io.use((socket, next) => {
+  // call the session middleware from the socket middleware to share session data
+  sessionMiddleware(socket.request, socket.request.res, next);
 })
 
 // TODO: add resetting the game

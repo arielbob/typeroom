@@ -17,6 +17,11 @@ const io = require('socket.io')(http)
 
 const accounts = require('./routes/accounts')
 
+const User = require('./models/User')
+
+// for logging objects
+const util = require('util')
+
 require('dotenv').config()
 
 // connect to db
@@ -82,11 +87,11 @@ app.post('/create', (req, res) => {
 
 io.use((socket, next) => {
   // call the session middleware from the socket middleware to share session data
-  sessionMiddleware(socket.request, socket.request.res, next);
+  sessionMiddleware(socket.request, socket.request.res, next)
 })
 
 // TODO: add resetting the game
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
   const { id: roomId } = socket.handshake.query
   console.log('A user connected to room', roomId)
   socket.join(roomId)
@@ -97,32 +102,53 @@ io.on('connection', (socket) => {
     return
   }
 
-  let { text, wordArray, playersById } = rooms[roomId]
-  if (!playersById.hasOwnProperty(socket.id)) {
-    playersById[socket.id] = {
-      username: socket.id, // TODO: get username from db
-      nextWordId: 0,
-      place: null,
-      id: socket.id
+  let username = null;
+  let id = socket.id;
+  const { session } = socket.request
+
+  // get the current user's data
+  if (session && session.userId) {
+    try {
+      const user = await User.findById(session.userId).exec()
+
+      if (user.username) {
+        username = user.username
+        id = user._id
+      }
+    } catch {
+      // not sure if we should like return an error here or something
+      // just keep the default values if findById throws an error
     }
   }
 
-  console.log(rooms)
+  let { text, wordArray, playersById } = rooms[roomId]
+  if (!playersById.hasOwnProperty(id)) {
+    playersById[id] = {
+      username: username || 'Guest',
+      nextWordId: 0,
+      place: null,
+      id: id
+    }
+  }
 
-  socket.to(roomId).emit('connection', playersById[socket.id]) // send to everyone else that a new player joined
+  console.log(util.inspect(rooms, false, null, true))
+
+  socket.to(roomId).emit('connection', playersById[id]) // send to everyone else that a new player joined
+  // send to connected client the game text and the player list
   socket.emit('text', text)
-  socket.emit('players', playersById) // send to connected client the player list
+  socket.emit('players', playersById)
 
+  // add listeners to this socket
   socket.on('word input', (word) => {
-    const { nextWordId } = playersById[socket.id]
+    const { nextWordId } = playersById[id]
     if (nextWordId < wordArray.length) {
       console.log(word, wordArray[nextWordId])
       if (word.trim() == wordArray[nextWordId]) {
-        playersById[socket.id].nextWordId++
+        playersById[id].nextWordId++
         // send the progress of whoever just typed a word to everyone in the room (including the typer)
-        io.to(roomId).emit('progress', socket.id, playersById[socket.id].nextWordId)
-        if (playersById[socket.id].nextWordId == wordArray.length) {
-          io.to(roomId).emit('place', socket.id, ++rooms[roomId].numWinners)
+        io.to(roomId).emit('progress', id, playersById[id].nextWordId)
+        if (playersById[id].nextWordId == wordArray.length) {
+          io.to(roomId).emit('place', id, ++rooms[roomId].numWinners)
         }
       }
     }
@@ -130,9 +156,9 @@ io.on('connection', (socket) => {
 
   socket.on('disconnecting', () => {
     console.log('A user disconnected...');
-    playersById[socket.id] = undefined
+    playersById[id] = undefined
 
-    io.to(roomId).emit('disconnect', socket.id)
+    io.to(roomId).emit('disconnect', id)
   })
 })
 

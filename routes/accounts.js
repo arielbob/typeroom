@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const User = require('../models/user')
+const User = require('../models/User')
 
 router.post('/register', function(req, res, next) {
   const { email, username, password, passwordConf } = req.body

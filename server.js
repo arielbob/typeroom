@@ -133,22 +133,27 @@ io.on('connection', async (socket) => {
 
   console.log(util.inspect(rooms, false, null, true))
 
-  socket.to(roomId).emit('connection', playersById[id]) // send to everyone else that a new player joined
-  // send to connected client the game text and the player list
+  const player = playersById[id]
+
+  socket.to(roomId).emit('connection', player) // send to everyone else that a new player joined
+  // send to connected client their id, the game text, and the player list
+  socket.emit('clientInfo', id)
   socket.emit('text', text)
   socket.emit('players', playersById)
 
   // add listeners to this socket
   socket.on('word input', (word) => {
-    const { nextWordId } = playersById[id]
-    if (nextWordId < wordArray.length) {
-      console.log(word, wordArray[nextWordId])
-      if (word.trim() == wordArray[nextWordId]) {
-        playersById[id].nextWordId++
+    // const { nextWordId } = playersById[id]
+    if (player.nextWordId < wordArray.length) {
+      console.log(word, wordArray[player.nextWordId])
+      if (word.trim() == wordArray[player.nextWordId]) {
+        player.nextWordId++
         // send the progress of whoever just typed a word to everyone in the room (including the typer)
-        io.to(roomId).emit('progress', id, playersById[id].nextWordId)
-        if (playersById[id].nextWordId == wordArray.length) {
-          io.to(roomId).emit('place', id, ++rooms[roomId].numWinners)
+        io.to(roomId).emit('progress', id, player.nextWordId)
+
+        if (player.nextWordId == wordArray.length) {
+          player.place = ++rooms[roomId].numWinners
+          io.to(roomId).emit('place', id, player.place)
         }
       }
     }
@@ -156,7 +161,10 @@ io.on('connection', async (socket) => {
 
   socket.on('disconnecting', () => {
     console.log('A user disconnected...');
-    playersById[id] = undefined
+    // don't remove the player when they disconnect
+    // we reset players when game resets and then people just join in; i.e. there isn't a
+    // need for removing players when they disconnect
+    // playersById[id] = undefined
 
     io.to(roomId).emit('disconnect', id)
   })

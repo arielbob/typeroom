@@ -56,7 +56,6 @@ export const setGameText = (text) => ({
   }
 })
 
-
 export const setAllPlayers = (playersById) => ({
   type: 'SET_ALL_PLAYERS',
   payload: {

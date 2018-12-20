@@ -19,7 +19,8 @@ const PlayerList = ({ clientId, playersById, textLength }) => (
 
           <p>
             <strong>
-              {playersById[id].place ? placeWord(playersById[id].place) + ' -' : null} {id == clientId ? 'You' : playersById[id].username}
+              {playersById[id].place ? '(' + placeWord(playersById[id].place) + ') ' : null}
+              {id == clientId ? 'You' : playersById[id].username}
             </strong>: {playersById[id].nextWordId / textLength}
           </p>
         </li>

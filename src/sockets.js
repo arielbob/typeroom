@@ -36,7 +36,11 @@ export const socketMiddleware = (store) => (next) => (action) => {
 const eventHandlers = {
   connect: (dispatch) => {
     console.log('connected to socket')
-    dispatch(setClientId(socket.id))
+    // dispatch(setClientId(socket.id))
+  },
+  clientInfo: (dispatch, state, id) => {
+    console.log(id)
+    dispatch(setClientId(id))
   },
   connection: (dispatch, state, player) => {
     console.log('user joined')
@@ -62,7 +66,7 @@ const eventHandlers = {
   },
   disconnect: (dispatch, state, id) => {
     console.log('disconnected from socket')
-    dispatch(removePlayer(id))
+    // dispatch(removePlayer(id))
   },
   serverError: (dispatch, state, error) => {
     console.log(error)

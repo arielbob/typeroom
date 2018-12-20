@@ -2,13 +2,14 @@ import React from 'react'
 
 const placeWord = (place) => {
   const places = {
-    1: '1st',
-    2: '2nd',
-    3: '3rd'
+    1: 'st',
+    2: 'nd',
+    3: 'rd'
   }
 
-  if (places[place]) return places[place]
-  return place + 'th'
+  if (place >= 11 && place <= 13) return place + 'th'
+
+  return place + (places[place % 10] || 'th')
 }
 
 const PlayerList = ({ clientId, playersById, textLength }) => (
@@ -16,7 +17,6 @@ const PlayerList = ({ clientId, playersById, textLength }) => (
     {
       Object.keys(playersById).filter(id => playersById[id]).map(id => (
         <li key={id}>
-
           <p>
             <strong>
               {playersById[id].place ? '(' + placeWord(playersById[id].place) + ') ' : null}

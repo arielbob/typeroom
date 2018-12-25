@@ -15,7 +15,8 @@ const app = express()
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 
-const accounts = require('./routes/accounts')
+const accountsRoutes = require('./routes/accounts')
+const roomsRoutes = require('./routes/rooms')
 
 const User = require('./models/User')
 
@@ -48,42 +49,16 @@ const sessionMiddleware = session({
 })
 app.use(sessionMiddleware)
 
-app.use(accounts)
+app.use(accountsRoutes)
+app.use(roomsRoutes)
 
 app.use(history())
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath
 }))
 
-const text = 'Type me :)'
-let rooms = {
-  0: {
-    text,
-    wordArray: text.split(' '),
-    numWinners: 0,
-    playersById: {}
-  },
-  1: {
-    text: 'This is the text from room 1',
-    wordArray: 'This is the text from room 1'.split(' '),
-    numWinners: 0,
-    playersById: {}
-  }
-}
-let numRooms = 0
-
-app.post('/create', (req, res) => {
-  const roomId = numRooms++
-  rooms[roomId] = {
-    text: 'Type this text from room ' + roomId,
-    numWinners: 0,
-    playersById: {}
-  }
-
-  console.log('Room created:', rooms[roomId])
-
-  res.redirect('/room/' + roomId)
-})
+const roomData = require('./roomData')
+const { rooms } = roomData
 
 io.use((socket, next) => {
   // call the session middleware from the socket middleware to share session data

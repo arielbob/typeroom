@@ -58,7 +58,7 @@ app.use(webpackDevMiddleware(compiler, {
 }))
 
 const roomData = require('./roomData')
-const { rooms, resetRoom } = roomData
+const { rooms, resetRoom, addPlayer } = roomData
 
 io.use((socket, next) => {
   // call the session middleware from the socket middleware to share session data
@@ -98,12 +98,7 @@ io.on('connection', async (socket) => {
 
   let { text, wordArray, playersById } = rooms[roomId]
   if (!playersById.hasOwnProperty(id)) {
-    playersById[id] = {
-      username: username || 'Guest',
-      nextWordId: 0,
-      place: null,
-      id: id
-    }
+    addPlayer(roomId, id)
   }
 
   console.log(util.inspect(rooms, false, null, true))
@@ -118,11 +113,12 @@ io.on('connection', async (socket) => {
 
   // add listeners to this socket
   socket.on('word input', (word) => {
-    // const { nextWordId } = playersById[id]
     if (player.nextWordId < wordArray.length) {
       console.log(word, wordArray[player.nextWordId])
+
       if (word.trim() == wordArray[player.nextWordId]) {
         player.nextWordId++
+
         // send the progress of whoever just typed a word to everyone in the room (including the typer)
         io.to(roomId).emit('progress', id, player.nextWordId)
 

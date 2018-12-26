@@ -37,6 +37,7 @@ const createRoom = () => {
 const resetRoom = (id) => {
   if (rooms.hasOwnProperty(id)) {
     rooms[id].numWinners = 0
+    rooms[id].playerIds = []
     rooms[id].playersById = {}
   }
 }

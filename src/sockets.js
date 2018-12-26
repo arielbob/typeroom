@@ -13,19 +13,26 @@ let socket = null
 
 // sending socket events via redux actions
 export const socketMiddleware = (store) => (next) => (action) => {
-  if (action.type === 'OPEN_ROOM') {
-    const { id } = action.payload
+  switch (action.type) {
+    case 'OPEN_ROOM':
+      const { id } = action.payload
 
-    console.log('connecting to socket')
-    socket = io({
-      query: { id }
-    })
-    initSockets(socket, store)
+      console.log('connecting to socket')
+      socket = io({
+        query: { id }
+      })
+      initSockets(socket, store)
+      break;
   }
 
   if (socket) {
-    if (action.type === 'INPUT_WORD') {
-      socket.emit('word input', action.payload.word)
+    switch (action.type) {
+      case 'INPUT_WORD':
+        socket.emit('word input', action.payload.word)
+        break;
+      case 'JOIN_ROOM':
+        socket.emit('join room')
+        break;
     }
   }
 

@@ -96,24 +96,30 @@ io.on('connection', async (socket) => {
     }
   }
 
-  let { text, wordArray, playersById } = rooms[roomId]
-  if (!playersById.hasOwnProperty(id)) {
-    addPlayer(roomId, id)
-  }
+  let { text, wordArray, playerIds, playersById } = rooms[roomId]
 
   console.log(util.inspect(rooms, false, null, true))
 
-  const player = playersById[id]
+  let player
 
-  socket.to(roomId).emit('connection', player) // send to everyone else that a new player joined
   // send to connected client their id, the game text, and the player list
   socket.emit('clientInfo', id)
   socket.emit('text', text)
   socket.emit('players', playersById)
 
+  socket.on('join room', () => {
+    if (!playersById.hasOwnProperty(id)) {
+      addPlayer(roomId, id)
+      player = playersById[id]
+
+      socket.to(roomId).emit('connection', player) // send to everyone else that a new player joined
+      socket.emit('players', playersById)
+    }
+  })
+
   // add listeners to this socket
   socket.on('word input', (word) => {
-    if (player.nextWordId < wordArray.length) {
+    if (player && player.nextWordId < wordArray.length) {
       console.log(word, wordArray[player.nextWordId])
 
       if (word.trim() == wordArray[player.nextWordId]) {

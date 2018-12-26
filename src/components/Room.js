@@ -9,6 +9,10 @@ class Room extends React.Component {
     this.props.openRoom()
   }
 
+  joinRoom() {
+    this.props.joinRoom()
+  }
+
   render() {
     return (
       <div>
@@ -16,6 +20,9 @@ class Room extends React.Component {
         <GameTextContainer />
         <TypeInputContainer />
         <PlayerListContainer />
+        {
+          !this.props.isJoined ? <button onClick={() => this.joinRoom()}>Join Room</button> : null
+        }
       </div>
     )
   }

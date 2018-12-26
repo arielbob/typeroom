@@ -15,6 +15,12 @@ export const openRoom = (id) => {
   }
 }
 
+export const joinRoom = () => {
+  return {
+    type: 'JOIN_ROOM'
+  }
+}
+
 export const setInputValue = (inputValue) => (dispatch) => {
   const spaceEntered = inputValue.charAt(inputValue.length - 1) === ' '
 

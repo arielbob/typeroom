@@ -1,12 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { openRoom } from '../actions.js'
+import { openRoom, joinRoom } from '../actions.js'
 import Room from '../components/Room'
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   openRoom: () => {
     dispatch(openRoom(ownProps.match.params.id))
+  },
+  joinRoom: () => {
+    dispatch(joinRoom())
   }
 })
 
-export default connect(null, mapDispatchToProps)(Room)
+const mapStateToProps = ({ isJoined }) => ({
+  isJoined
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Room)

@@ -106,13 +106,23 @@ const playersById = (state = {}, action) => {
   }
 }
 
+const isJoined = (state = false, action) => {
+  switch (action.type) {
+    case 'JOIN_ROOM':
+      return true
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   errorMessage,
   clientId,
   currentRoomId,
   gameText,
   inputValue,
-  playersById
+  playersById,
+  isJoined
 })
 
 export default rootReducer

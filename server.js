@@ -58,7 +58,7 @@ app.use(webpackDevMiddleware(compiler, {
 }))
 
 const roomData = require('./roomData')
-const { rooms } = roomData
+const { rooms, resetRoom } = roomData
 
 io.use((socket, next) => {
   // call the session middleware from the socket middleware to share session data

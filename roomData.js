@@ -14,9 +14,19 @@ let rooms = {
   }
 }
 
+let numRooms = 2
+
+const resetRoom = (id) => {
+  if (rooms.hasOwnProperty(id)) {
+    rooms[id].numWinners = 0
+    rooms[id].playersById = {}
+  }
+}
+
 const roomData = {
   rooms,
-  numRooms: 2
+  resetRoom,
+  numRooms
 }
 
 module.exports = roomData

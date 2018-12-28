@@ -110,6 +110,8 @@ const isJoined = (state = false, action) => {
   switch (action.type) {
     case 'JOIN_ROOM':
       return true
+    case 'LEAVE_ROOM':
+      return false
     default:
       return state
   }

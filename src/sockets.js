@@ -6,7 +6,8 @@ import {
   setAllPlayers,
   setNextWordId,
   setGameText,
-  setPlace
+  setPlace,
+  leaveRoom
 } from './actions'
 
 let socket = null
@@ -58,6 +59,7 @@ const eventHandlers = {
     }
   },
   players: (dispatch, state, playersById) => {
+    // this should also probably take the playerIds array
     dispatch(setAllPlayers(playersById))
   },
   // NOTE: could have placing here or in the server and have the server emit a setPlace event
@@ -70,6 +72,10 @@ const eventHandlers = {
   },
   text: (dispatch, state, text) => {
     dispatch(setGameText(text))
+  },
+  removePlayer: (dispatch) => {
+    console.log('removing players')
+    dispatch(leaveRoom())
   },
   disconnect: (dispatch, state, id) => {
     console.log('disconnected from socket')

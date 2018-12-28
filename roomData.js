@@ -53,6 +53,8 @@ const addPlayer = (roomId, playerId, username = 'Guest', nextWordId = 0, place =
       id: playerId
     }
     room.playerIds.push(playerId)
+
+    return room.playersById[playerId]
   }
 }
 

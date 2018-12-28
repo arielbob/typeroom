@@ -15,11 +15,13 @@ export const openRoom = (id) => {
   }
 }
 
-export const joinRoom = () => {
-  return {
-    type: 'JOIN_ROOM'
-  }
-}
+export const joinRoom = () => ({
+  type: 'JOIN_ROOM'
+})
+
+export const leaveRoom = () => ({
+  type: 'LEAVE_ROOM'
+})
 
 export const setInputValue = (inputValue) => (dispatch) => {
   const spaceEntered = inputValue.charAt(inputValue.length - 1) === ' '
@@ -84,15 +86,6 @@ export const addPlayer = (player) => ({
     nextWordId: 0,
     place: null,
     ...player
-  }
-})
-
-// NOTE: i think this will be unnecessary in the future when we have constant IDs instead of IDs given to us
-// by the socket
-export const removePlayer = (id) => ({
-  type: 'REMOVE_PLAYER',
-  payload: {
-    id
   }
 })
 

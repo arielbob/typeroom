@@ -65,7 +65,6 @@ io.use((socket, next) => {
   sessionMiddleware(socket.request, socket.request.res, next)
 })
 
-// TODO: add resetting the game
 io.on('connection', async (socket) => {
   const { id: roomId } = socket.handshake.query
   console.log('A user connected to room', roomId)
@@ -82,6 +81,7 @@ io.on('connection', async (socket) => {
   const { session } = socket.request
 
   // get the current user's data
+  // TODO: maybe move this to roomData...
   if (session && session.userId) {
     try {
       const user = await User.findById(session.userId).exec()
@@ -96,21 +96,20 @@ io.on('connection', async (socket) => {
     }
   }
 
-  let { text, wordArray, playerIds, playersById } = rooms[roomId]
 
   console.log(util.inspect(rooms, false, null, true))
 
-  let player
-
   // send to connected client their id, the game text, and the player list
+  const room = rooms[roomId]
   socket.emit('clientInfo', id)
-  socket.emit('text', text)
-  socket.emit('players', playersById)
+  socket.emit('text', room.text)
+  socket.emit('players', room.playersById)
 
   socket.on('join room', () => {
+    const { playersById } = room
+
     if (!playersById.hasOwnProperty(id)) {
-      addPlayer(roomId, id)
-      player = playersById[id]
+      const player = addPlayer(roomId, id)
 
       socket.to(roomId).emit('connection', player) // send to everyone else that a new player joined
       socket.emit('players', playersById)
@@ -119,6 +118,9 @@ io.on('connection', async (socket) => {
 
   // add listeners to this socket
   socket.on('word input', (word) => {
+    const { text, wordArray, playerIds, playersById } = room
+    const player = playersById[id]
+
     if (player && player.nextWordId < wordArray.length) {
       console.log(word, wordArray[player.nextWordId])
 
@@ -131,6 +133,16 @@ io.on('connection', async (socket) => {
         if (player.nextWordId == wordArray.length) {
           player.place = ++rooms[roomId].numWinners
           io.to(roomId).emit('place', id, player.place)
+
+          if (player.place == playerIds.length) {
+            console.log('Game is over!')
+            resetRoom(roomId)
+            console.log(util.inspect(rooms, false, null, true))
+
+            io.to(roomId).emit('text', text)
+            io.to(roomId).emit('players', rooms[roomId].playersById)
+            io.to(roomId).emit('removePlayer')
+          }
         }
       }
     }

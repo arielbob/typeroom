@@ -36,6 +36,11 @@ router.post('/login', function(req, res, next) {
   const { email, password } = req.body
 
   if (email && password) {
+    // if (req.session.userId) {
+    //   console.log(req.session.userId + ' is already logged in!')
+    // } else {
+    //   console.log('Not logged in yet')
+    // }
     User.authenticate(email, password)
       .then(user => {
         req.session.userId = user._id

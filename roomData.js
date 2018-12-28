@@ -1,3 +1,5 @@
+const User = require('./models/User')
+
 const text = 'Type me :)'
 let rooms = {
   0: {
@@ -42,22 +44,43 @@ const resetRoom = (id) => {
   }
 }
 
-const addPlayer = (roomId, playerId, username = 'Guest', nextWordId = 0, place = null) => {
+const addPlayer = async (socket, roomId) => {
   if (rooms.hasOwnProperty(roomId)) {
+    // default values
+    let username = 'Guest';
+    let id = socket.id;
+
+    // get the current user's data
+    const { session } = socket.request
+    if (session && session.userId) {
+      try {
+        const user = await User.findById(session.userId).exec()
+
+        if (user) {
+          username = user.username
+          id = user._id
+        }
+      } catch(err) {
+        console.log(err)
+        // not sure if we should like return an error here or something
+        // just keep the default values if findById throws an error
+      }
+    }
+
     const room = rooms[roomId]
     const { playerIds, playersById } = room
 
-    if (!playersById.hasOwnProperty(playerId)) {
-      playersById[playerId] = {
+    if (!playersById.hasOwnProperty(id)) {
+      playersById[id] = {
         username,
-        nextWordId,
-        place,
-        id: playerId
+        id,
+        nextWordId: 0,
+        place: null
       }
-      playerIds.push(playerId)
-
-      return playersById[playerId]
+      playerIds.push(id)
     }
+
+    return playersById[id]
   }
 
   return null

@@ -18,8 +18,6 @@ const io = require('socket.io')(http)
 const accountsRoutes = require('./routes/accounts')
 const roomsRoutes = require('./routes/rooms')
 
-const User = require('./models/User')
-
 // for logging objects
 const util = require('util')
 
@@ -76,39 +74,21 @@ io.on('connection', async (socket) => {
     return
   }
 
-  let username = null;
-  let id = socket.id;
-  const { session } = socket.request
-
-  // get the current user's data
-  // TODO: maybe move this to roomData...
-  if (session && session.userId) {
-    try {
-      const user = await User.findById(session.userId).exec()
-
-      if (user.username) {
-        username = user.username
-        id = user._id
-      }
-    } catch {
-      // not sure if we should like return an error here or something
-      // just keep the default values if findById throws an error
-    }
-  }
-
-
   console.log(util.inspect(rooms, false, null, true))
 
-  // send to connected client their id, the game text, and the player list
+  let player = null
+
+  // send to connected client the game text, and the player list
   const room = rooms[roomId]
-  socket.emit('clientInfo', id)
   socket.emit('text', room.text)
   socket.emit('players', room.playersById)
 
-  socket.on('join room', () => {
-    const player = addPlayer(roomId, id)
+  socket.on('join room', async () => {
+    player = await addPlayer(socket, roomId)
 
     if (player) {
+      // send the client their id
+      socket.emit('clientInfo', player.id)
       // send to everyone (including the new player themself) that a new player connected
       io.to(roomId).emit('join', player)
     }
@@ -117,7 +97,6 @@ io.on('connection', async (socket) => {
   // add listeners to this socket
   socket.on('word input', (word) => {
     const { text, wordArray, playerIds, playersById } = room
-    const player = playersById[id]
 
     if (player && player.nextWordId < wordArray.length) {
       console.log(word, wordArray[player.nextWordId])
@@ -126,11 +105,11 @@ io.on('connection', async (socket) => {
         player.nextWordId++
 
         // send the progress of whoever just typed a word to everyone in the room (including the typer)
-        io.to(roomId).emit('progress', id, player.nextWordId)
+        io.to(roomId).emit('progress', player.id, player.nextWordId)
 
         if (player.nextWordId == wordArray.length) {
           player.place = ++rooms[roomId].numWinners
-          io.to(roomId).emit('place', id, player.place)
+          io.to(roomId).emit('place', player.id, player.place)
 
           if (player.place == playerIds.length) {
             console.log('Game is over!')
@@ -153,7 +132,9 @@ io.on('connection', async (socket) => {
     // need for removing players when they disconnect
     // playersById[id] = undefined
 
-    io.to(roomId).emit('disconnect', id)
+    if (player) {
+      io.to(roomId).emit('disconnect', player.id)
+    }
   })
 })
 

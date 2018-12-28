@@ -106,13 +106,11 @@ io.on('connection', async (socket) => {
   socket.emit('players', room.playersById)
 
   socket.on('join room', () => {
-    const { playersById } = room
+    const player = addPlayer(roomId, id)
 
-    if (!playersById.hasOwnProperty(id)) {
-      const player = addPlayer(roomId, id)
-
-      socket.to(roomId).emit('connection', player) // send to everyone else that a new player joined
-      socket.emit('players', playersById)
+    if (player) {
+      // send to everyone (including the new player themself) that a new player connected
+      io.to(roomId).emit('join', player)
     }
   })
 

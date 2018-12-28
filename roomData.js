@@ -45,17 +45,22 @@ const resetRoom = (id) => {
 const addPlayer = (roomId, playerId, username = 'Guest', nextWordId = 0, place = null) => {
   if (rooms.hasOwnProperty(roomId)) {
     const room = rooms[roomId]
+    const { playerIds, playersById } = room
 
-    room.playersById[playerId] = {
-      username,
-      nextWordId,
-      place,
-      id: playerId
+    if (!playersById.hasOwnProperty(playerId)) {
+      playersById[playerId] = {
+        username,
+        nextWordId,
+        place,
+        id: playerId
+      }
+      playerIds.push(playerId)
+
+      return playersById[playerId]
     }
-    room.playerIds.push(playerId)
-
-    return room.playersById[playerId]
   }
+
+  return null
 }
 
 const roomData = {

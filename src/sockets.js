@@ -50,7 +50,7 @@ const eventHandlers = {
     console.log(id)
     dispatch(setClientId(id))
   },
-  connection: (dispatch, state, player) => {
+  join: (dispatch, state, player) => {
     console.log('user joined')
 
     // this check could either be here or in the action creator...

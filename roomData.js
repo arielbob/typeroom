@@ -44,6 +44,18 @@ const resetRoom = (id) => {
   }
 }
 
+const findJoinedPlayer = (roomId, userId) => {
+  if (rooms.hasOwnProperty(roomId)) {
+    const { playersById } = rooms[roomId]
+
+    if (playersById.hasOwnProperty(userId)) {
+      return playersById[userId]
+    }
+  }
+
+  return null
+}
+
 const addPlayer = async (socket, roomId) => {
   if (rooms.hasOwnProperty(roomId)) {
     // default values
@@ -90,6 +102,7 @@ const roomData = {
   rooms,
   createRoom,
   resetRoom,
+  findJoinedPlayer,
   addPlayer,
   numRooms
 }

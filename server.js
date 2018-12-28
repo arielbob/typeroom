@@ -56,7 +56,12 @@ app.use(webpackDevMiddleware(compiler, {
 }))
 
 const roomData = require('./roomData')
-const { rooms, resetRoom, addPlayer } = roomData
+const {
+  rooms,
+  resetRoom,
+  addPlayer,
+  findJoinedPlayer
+} = roomData
 
 io.use((socket, next) => {
   // call the session middleware from the socket middleware to share session data
@@ -77,6 +82,12 @@ io.on('connection', async (socket) => {
   console.log(util.inspect(rooms, false, null, true))
 
   let player = null
+
+  // if the user's already joined, then we can send their data before actually joining the game
+  if (socket.request.session && socket.request.session.userId) {
+    player = findJoinedPlayer(roomId, socket.request.session.userId)
+    if (player) socket.emit('clientInfo', player.id)
+  }
 
   // send to connected client the game text, and the player list
   const room = rooms[roomId]

@@ -58,11 +58,13 @@ const findJoinedPlayer = (roomId, userId) => {
 
 const addPlayer = async (socket, roomId) => {
   if (rooms.hasOwnProperty(roomId)) {
+    const room = rooms[roomId]
+    const { playerIds, playersById } = room
+
     // default values
-    let username = 'Guest';
-    // FIXME: someone can just change their socket id on the client to some user's id
-    // and then they would have access to that account...
-    let id = socket.id;
+    let username = 'Guest'
+    let id = playerIds.length
+    let isGuest = true
 
     // get the current user's data
     const { session } = socket.request
@@ -73,6 +75,7 @@ const addPlayer = async (socket, roomId) => {
         if (user) {
           username = user.username
           id = user._id
+          isGuest = false
         }
       } catch(err) {
         console.log(err)
@@ -81,13 +84,11 @@ const addPlayer = async (socket, roomId) => {
       }
     }
 
-    const room = rooms[roomId]
-    const { playerIds, playersById } = room
-
     if (!playersById.hasOwnProperty(id)) {
       playersById[id] = {
         username,
         id,
+        isGuest,
         nextWordId: 0,
         place: null
       }

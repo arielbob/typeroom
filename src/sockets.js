@@ -27,6 +27,8 @@ export const socketMiddleware = (store) => (next) => (action) => {
   }
 
   if (socket) {
+    console.log(socket.id)
+    
     switch (action.type) {
       case 'INPUT_WORD':
         socket.emit('word input', action.payload.word)

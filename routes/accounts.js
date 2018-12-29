@@ -64,6 +64,7 @@ router.post('/logout', function(req, res, next) {
   res.redirect('/')
 })
 
+// FIXME: i think this throws an error sometimes right after logging in
 router.get('/profile', function(req, res, next) {
   if (req.session.userId) {
     User.findById(req.session.userId).exec()

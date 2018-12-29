@@ -60,6 +60,8 @@ const addPlayer = async (socket, roomId) => {
   if (rooms.hasOwnProperty(roomId)) {
     // default values
     let username = 'Guest';
+    // FIXME: someone can just change their socket id on the client to some user's id
+    // and then they would have access to that account...
     let id = socket.id;
 
     // get the current user's data

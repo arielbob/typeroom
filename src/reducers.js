@@ -81,7 +81,6 @@ const player = (state = {}, action) => {
         ...state,
         ...action.payload
       }
-      break;
     case 'REMOVE_PLAYER':
       return null
     default:
@@ -108,7 +107,7 @@ const playersById = (state = {}, action) => {
 
 const isJoined = (state = false, action) => {
   switch (action.type) {
-    case 'JOIN_ROOM':
+    case 'JOIN_SUCCESS':
       return true
     case 'LEAVE_ROOM':
       return false

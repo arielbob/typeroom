@@ -64,12 +64,18 @@ export const setGameText = (text) => ({
   }
 })
 
-export const setAllPlayers = (playersById) => ({
-  type: 'SET_ALL_PLAYERS',
-  payload: {
-    playersById
+export const setAllPlayers = (playersById) => (dispatch, getState) => {
+  if (playersById.hasOwnProperty(getState().clientId)) {
+    dispatch({ type: 'JOIN_SUCCESS'})
   }
-})
+
+  dispatch({
+    type: 'SET_ALL_PLAYERS',
+    payload: {
+      playersById
+    }
+  })
+}
 
 // we get the id from the server and send it in the object here
 // players should be persistent
@@ -79,15 +85,21 @@ export const setAllPlayers = (playersById) => ({
 // because they could come back
 // then we check in the connection event if they already exist; if they don't, then we
 // dispatch addPlayer()
-export const addPlayer = (player) => ({
-  type: 'ADD_PLAYER',
-  payload: {
-    username: '',
-    nextWordId: 0,
-    place: null,
-    ...player
+export const addPlayer = (player) => (dispatch, getState) => {
+  if (player.id == getState().clientId) {
+    dispatch({ type: 'JOIN_SUCCESS' })
   }
-})
+
+  return dispatch({
+    type: 'ADD_PLAYER',
+    payload: {
+      username: '',
+      nextWordId: 0,
+      place: null,
+      ...player
+    }
+  })
+}
 
 export const setNextWordId = (id, nextWordId) => ({
   type: 'SET_NEXT_WORD_ID',

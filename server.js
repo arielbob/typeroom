@@ -83,10 +83,14 @@ io.on('connection', async (socket) => {
 
   let player = null
 
-  // if the user's already joined, then we can send their data before actually joining the game
+  // if the user's already joined the game, we can send their client info.
+  // when we send the player list, the client can see that they're already joined
+  // so we allow them to type without manually joining again on the client
   if (socket.request.session && socket.request.session.userId) {
     player = findJoinedPlayer(roomId, socket.request.session.userId)
-    if (player) socket.emit('clientInfo', player.id)
+    if (player) {
+      socket.emit('clientInfo', player.id)
+    }
   }
 
   // send to connected client the game text, and the player list

@@ -129,6 +129,7 @@ io.on('connection', async (socket) => {
 
           if (player.place == playerIds.length) {
             console.log('Game is over!')
+            room.updateStats()
             room.resetRoom()
 
             io.to(roomId).emit('text', text)

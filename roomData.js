@@ -60,6 +60,35 @@ class Room {
 
     return this.playersById[id]
   }
+
+  updateStats() {
+    // find the logged in users
+    const userIds = this.playerIds.filter(id => {
+      return !this.playersById[id].isGuest
+    })
+
+    // increment the races stat for all logged in users
+    User.updateMany(
+      { _id: { $in: userIds } },
+      { $inc: { 'stats.races': 1 } }
+    ).exec()
+
+    // if the winner is logged in, we increment their wins
+    for (let id in this.playersById) {
+      const { place, isGuest } = this.playersById[id]
+
+      if (place == 1) {
+        if (!isGuest) {
+          User.updateOne(
+            { _id: id },
+            { $inc: { 'stats.wins': 1 } }
+          ).exec()
+        }
+
+        break;
+      }
+    }
+  }
 }
 
 const text = 'Type me :)'

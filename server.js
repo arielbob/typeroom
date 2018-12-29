@@ -73,7 +73,9 @@ io.on('connection', async (socket) => {
   console.log('A user connected to room', roomId)
   socket.join(roomId)
 
-  if (!rooms.hasOwnProperty(roomId)) {
+  const room = rooms[roomId]
+
+  if (!room) {
     socket.emit('serverError', 'Room does not exist!')
     socket.disconnect()
     return
@@ -87,19 +89,18 @@ io.on('connection', async (socket) => {
   // when we send the player list, the client can see that they're already joined
   // so we allow them to type without manually joining again on the client
   if (socket.request.session && socket.request.session.userId) {
-    player = findJoinedPlayer(roomId, socket.request.session.userId)
+    player = room.findJoinedPlayer(socket.request.session.userId)
     if (player) {
       socket.emit('clientInfo', player.id)
     }
   }
 
   // send to connected client the game text, and the player list
-  const room = rooms[roomId]
   socket.emit('text', room.text)
   socket.emit('players', room.playersById)
 
   socket.on('join room', async () => {
-    player = await addPlayer(socket, roomId)
+    player = await room.addPlayer(socket)
 
     if (player) {
       // send the client their id
@@ -128,8 +129,7 @@ io.on('connection', async (socket) => {
 
           if (player.place == playerIds.length) {
             console.log('Game is over!')
-            resetRoom(roomId)
-            console.log(util.inspect(rooms, false, null, true))
+            room.resetRoom()
 
             io.to(roomId).emit('text', text)
             io.to(roomId).emit('players', rooms[roomId].playersById)

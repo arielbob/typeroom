@@ -1,4 +1,5 @@
 const User = require('./models/User')
+const shortid = require('shortid')
 
 class Room {
   constructor(text, numWinners = 0, playerIds = [], playersById = {}) {
@@ -19,7 +20,7 @@ class Room {
       console.log('race done!')
       this.resetRoom()
       callback()
-    }, 1000 * 20) // 20 seconds
+    }, 1000 * 20) // 20 seconds TODO: change this
   }
 
   resetRoom() {
@@ -39,8 +40,8 @@ class Room {
 
   async addPlayer(socket) {
     // default values
-    let username = 'Guest'
-    let id = this.playerIds.length
+    let username = null
+    let id = null
     let isGuest = true
 
     // get the current user's data
@@ -61,7 +62,10 @@ class Room {
       }
     }
 
-    if (!this.playersById.hasOwnProperty(id)) {
+    if (!id || !this.playersById.hasOwnProperty(id)) {
+      username = username || 'Guest'
+      id = id || shortid.generate()
+
       this.playersById[id] = {
         username,
         id,

@@ -7,12 +7,26 @@ class Room {
     this.numWinners = numWinners
     this.playerIds = playerIds
     this.playersById = playersById
+    this.timer = null
+    this.isRunning = false
+  }
+
+  startRace(callback) {
+    if (this.timer) clearTimeout(this.timer)
+
+    this.isRunning = true
+    this.timer = setTimeout(() => {
+      console.log('race done!')
+      this.resetRoom()
+      callback()
+    }, 1000 * 5) // 20 seconds
   }
 
   resetRoom() {
     this.numWinners = 0
     this.playerIds = []
     this.playersById = {}
+    this.isRunning = false
   }
 
   findJoinedPlayer(id) {

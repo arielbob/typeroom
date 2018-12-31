@@ -107,14 +107,20 @@ io.on('connection', async (socket) => {
       socket.emit('clientInfo', player.id)
       // send to everyone (including the new player themself) that a new player connected
       io.to(roomId).emit('join', player)
+
+      if (!room.isRunning) room.startRace(() => {
+        io.to(roomId).emit('text', room.text)
+        io.to(roomId).emit('players', room.playersById)
+        io.to(roomId).emit('removePlayer')
+      })
     }
   })
 
   // add listeners to this socket
   socket.on('word input', (word) => {
-    const { text, wordArray, playerIds, playersById } = room
+    const { isRunning, text, wordArray, playerIds, playersById } = room
 
-    if (player && player.nextWordId < wordArray.length) {
+    if (isRunning && player && player.nextWordId < wordArray.length) {
       console.log(word, wordArray[player.nextWordId])
 
       if (word.trim() == wordArray[player.nextWordId]) {

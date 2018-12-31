@@ -19,7 +19,7 @@ class Room {
       console.log('race done!')
       this.resetRoom()
       callback()
-    }, 1000 * 5) // 20 seconds
+    }, 1000 * 20) // 20 seconds
   }
 
   resetRoom() {
@@ -31,7 +31,7 @@ class Room {
 
   findJoinedPlayer(id) {
     if (this.playersById.hasOwnProperty(id)) {
-      return this.playersById[id]
+      return id
     }
 
     return null
@@ -72,7 +72,7 @@ class Room {
       this.playerIds.push(id)
     }
 
-    return this.playersById[id]
+    return id
   }
 
   updateStats() {

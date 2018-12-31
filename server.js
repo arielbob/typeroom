@@ -83,15 +83,15 @@ io.on('connection', async (socket) => {
 
   console.log(util.inspect(rooms, false, null, true))
 
-  let player = null
+  let playerId = null
 
   // if the user's already joined the game, we can send their client info.
   // when we send the player list, the client can see that they're already joined
   // so we allow them to type without manually joining again on the client
   if (socket.request.session && socket.request.session.userId) {
-    player = room.findJoinedPlayer(socket.request.session.userId)
-    if (player) {
-      socket.emit('clientInfo', player.id)
+    playerId = room.findJoinedPlayer(socket.request.session.userId)
+    if (playerId) {
+      socket.emit('clientInfo', playerId)
     }
   }
 
@@ -100,11 +100,12 @@ io.on('connection', async (socket) => {
   socket.emit('players', room.playersById)
 
   socket.on('join room', async () => {
-    player = await room.addPlayer(socket)
+    playerId = await room.addPlayer(socket)
+    const player = room.playersById[playerId]
 
     if (player) {
       // send the client their id
-      socket.emit('clientInfo', player.id)
+      socket.emit('clientInfo', playerId)
       // send to everyone (including the new player themself) that a new player connected
       io.to(roomId).emit('join', player)
 
@@ -118,7 +119,9 @@ io.on('connection', async (socket) => {
 
   // add listeners to this socket
   socket.on('word input', (word) => {
-    const { isRunning, text, wordArray, playerIds, playersById } = room
+    const { isRunning, wordArray, playerIds, playersById } = room
+    // we do this to make sure the playerId is still joined in the game
+    const player = playersById[playerId]
 
     if (isRunning && player && player.nextWordId < wordArray.length) {
       console.log(word, wordArray[player.nextWordId])
@@ -127,19 +130,22 @@ io.on('connection', async (socket) => {
         player.nextWordId++
 
         // send the progress of whoever just typed a word to everyone in the room (including the typer)
-        io.to(roomId).emit('progress', player.id, player.nextWordId)
+        io.to(roomId).emit('progress', playerId, player.nextWordId)
 
         if (player.nextWordId == wordArray.length) {
           player.place = ++rooms[roomId].numWinners
-          io.to(roomId).emit('place', player.id, player.place)
+          io.to(roomId).emit('place', playerId, player.place)
 
           if (player.place == playerIds.length) {
             console.log('Game is over!')
             room.updateStats()
             room.resetRoom()
 
-            io.to(roomId).emit('text', text)
-            io.to(roomId).emit('players', rooms[roomId].playersById)
+            // TODO: put these in a single function
+            // we don't user the destructured properties here since, those are outdated.
+            // we want to send the new data after resetRoom()
+            io.to(roomId).emit('text', room.text)
+            io.to(roomId).emit('players', room.playersById)
             io.to(roomId).emit('removePlayer')
           }
         }
@@ -154,8 +160,8 @@ io.on('connection', async (socket) => {
     // need for removing players when they disconnect
     // playersById[id] = undefined
 
-    if (player) {
-      io.to(roomId).emit('disconnect', player.id)
+    if (room.playersById[playerId]) {
+      io.to(roomId).emit('disconnect', playerId)
     }
   })
 })

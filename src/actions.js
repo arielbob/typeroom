@@ -116,3 +116,10 @@ export const setPlace = (id, place) => ({
     place
   }
 })
+
+export const startRaceTimer = (time) => ({
+  type: 'START_RACE_TIMER',
+  payload: {
+    time
+  }
+})

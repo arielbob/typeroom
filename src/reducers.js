@@ -116,6 +116,15 @@ const isJoined = (state = false, action) => {
   }
 }
 
+const raceTimer = (state = 0, action) => {
+  switch (action.type) {
+    case 'START_RACE_TIMER':
+      return action.payload.time
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   errorMessage,
   clientId,
@@ -123,6 +132,7 @@ const rootReducer = combineReducers({
   gameText,
   inputValue,
   playersById,
+  raceTimer,
   isJoined
 })
 

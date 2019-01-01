@@ -113,6 +113,7 @@ io.on('connection', async (socket) => {
         io.to(roomId).emit('text', room.text)
         io.to(roomId).emit('players', room.playersById)
         io.to(roomId).emit('removePlayer')
+        io.to(roomId).emit('timerStart', room.raceTime)
       })
     }
   })

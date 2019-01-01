@@ -10,6 +10,7 @@ class Room {
     this.playersById = playersById
     this.timer = null
     this.isRunning = false
+    this.raceTime = 20 // 20 seconds
   }
 
   startRace(callback) {
@@ -20,7 +21,7 @@ class Room {
       console.log('race done!')
       this.resetRoom()
       callback()
-    }, 1000 * 20) // 20 seconds TODO: change this
+    }, 1000 * this.raceTime) // 20 seconds TODO: change this
   }
 
   resetRoom() {

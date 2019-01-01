@@ -12,8 +12,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 })
 
-const mapStateToProps = ({ isJoined }) => ({
-  isJoined
+const mapStateToProps = ({ isJoined, isRunning }) => ({
+  isJoined,
+  isRunning
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Room)

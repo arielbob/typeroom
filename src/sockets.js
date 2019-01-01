@@ -7,7 +7,8 @@ import {
   setNextWordId,
   setGameText,
   setPlace,
-  startRaceTimer,
+  startRace,
+  endRace,
   leaveRoom
 } from './actions'
 
@@ -74,8 +75,11 @@ const eventHandlers = {
   text: (dispatch, state, text) => {
     dispatch(setGameText(text))
   },
-  timerStart: (dispatch, state, time) => {
-    dispatch(startRaceTimer(time))
+  startRace: (dispatch, state, time) => {
+    dispatch(startRace(time))
+  },
+  endRace: (dispatch, state) => {
+    dispatch(endRace())
   },
   removePlayer: (dispatch) => {
     console.log('removing players')

@@ -117,9 +117,13 @@ export const setPlace = (id, place) => ({
   }
 })
 
-export const startRaceTimer = (time) => ({
-  type: 'START_RACE_TIMER',
+export const startRace = (time) => ({
+  type: 'START_RACE',
   payload: {
     time
   }
+})
+
+export const endRace = () => ({
+  type: 'END_RACE'
 })

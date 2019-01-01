@@ -118,8 +118,19 @@ const isJoined = (state = false, action) => {
 
 const raceTimer = (state = 0, action) => {
   switch (action.type) {
-    case 'START_RACE_TIMER':
+    case 'START_RACE':
       return action.payload.time
+    default:
+      return state
+  }
+}
+
+const isRunning = (state = false, action) => {
+  switch (action.type) {
+    case 'START_RACE':
+      return true
+    case 'END_RACE':
+      return false
     default:
       return state
   }
@@ -133,7 +144,8 @@ const rootReducer = combineReducers({
   inputValue,
   playersById,
   raceTimer,
-  isJoined
+  isJoined,
+  isRunning
 })
 
 export default rootReducer

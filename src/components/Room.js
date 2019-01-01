@@ -1,5 +1,6 @@
 import React from 'react'
 import ErrorMessage from '../containers/ErrorMessage'
+import TimerContainer from '../containers/TimerContainer'
 import GameTextContainer from '../containers/GameTextContainer'
 import TypeInputContainer from '../containers/TypeInputContainer'
 import PlayerListContainer from '../containers/PlayerListContainer'
@@ -17,6 +18,12 @@ class Room extends React.Component {
     return (
       <div>
         <ErrorMessage />
+        {
+        // TODO: we might want to have the timer freeze when the game ends
+        // we shouldn't just have it say 0 by default since the race can end before the timer
+        // reaches 0
+          this.props.isRunning ? <TimerContainer /> : null
+        }
         <GameTextContainer />
         <TypeInputContainer />
         <PlayerListContainer />

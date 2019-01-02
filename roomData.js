@@ -8,20 +8,28 @@ class Room {
     this.numWinners = numWinners
     this.playerIds = playerIds
     this.playersById = playersById
-    this.timer = null
     this.isRunning = false
-    this.raceTime = 20 // 20 seconds
+    this.currentTime = 0
+    this.timer = null
   }
 
   startRace(callback) {
     if (this.timer) clearTimeout(this.timer)
 
     this.isRunning = true
-    this.timer = setTimeout(() => {
-      console.log('race done!')
-      this.resetRoom()
-      callback()
-    }, 1000 * this.raceTime) // 20 seconds TODO: change this
+    this.currentTime = 20 // 20 seconds
+
+    // NOTE: this is only accurate to 1 second so... client time may be off by like
+    // at most 1 second
+    this.timer = setInterval(() => {
+      this.currentTime--
+
+      if (this.currentTime < 0) {
+        console.log('race done!')
+        this.resetRoom()
+        callback()
+      }
+    }, 1000)
   }
 
   resetRoom() {
@@ -29,6 +37,8 @@ class Room {
     this.playerIds = []
     this.playersById = {}
     this.isRunning = false
+    this.currentTime = 0
+    clearInterval(this.timer)
   }
 
   findJoinedPlayer(id) {

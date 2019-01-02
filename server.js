@@ -98,8 +98,7 @@ io.on('connection', async (socket) => {
   // send to connected client the game text, and the player list
   socket.emit('text', room.text)
   socket.emit('players', room.playersById)
-  // we need to store some type of timer on the server... (room.currentTime doesn't exist)
-  // if (room.isRunning) socket.emit('startRace', room.currentTime)
+  if (room.isRunning) socket.emit('startRace', room.currentTime)
 
   socket.on('join room', async () => {
     playerId = await room.addPlayer(socket)
@@ -112,14 +111,14 @@ io.on('connection', async (socket) => {
       io.to(roomId).emit('join', player)
 
       if (!room.isRunning) {
-        io.to(roomId).emit('startRace', room.raceTime)
-
         room.startRace(() => {
           io.to(roomId).emit('text', room.text)
           io.to(roomId).emit('players', room.playersById)
           io.to(roomId).emit('removePlayer')
           io.to(roomId).emit('endRace')
         })
+
+        io.to(roomId).emit('startRace', room.currentTime)
       }
     }
   })

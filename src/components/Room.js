@@ -1,6 +1,9 @@
 import React from 'react'
 import ErrorMessage from '../containers/ErrorMessage'
-import TimerContainer from '../containers/TimerContainer'
+
+import RaceTimer from '../containers/RaceTimer'
+import CountdownTimer from '../containers/CountdownTimer'
+
 import GameTextContainer from '../containers/GameTextContainer'
 import TypeInputContainer from '../containers/TypeInputContainer'
 import PlayerListContainer from '../containers/PlayerListContainer'
@@ -19,18 +22,27 @@ class Room extends React.Component {
       <div>
         <ErrorMessage />
         {
-          this.props.isCounting ? <p>counting down...</p> : null
+          // TODO: we might want to have the timer freeze when the game ends
+          // we shouldn't just have it say 0 by default since the race can end before the timer
+          // reaches 0
         }
         {
-          this.props.isRunning ? <p>running...</p> : null
+          this.props.isCounting ?
+            <div>
+              <p>counting down...</p>
+              <CountdownTimer render={(time) => <h3>{time}</h3>} />
+            </div>
+            : null
+        }
+        {
+          this.props.isRunning ?
+            <div>
+              <p>running</p>
+              <RaceTimer render={(time) => <h3 style={{color: 'red'}}>{time}</h3>} />
+            </div>
+            : null
         }
 
-        {
-        // TODO: we might want to have the timer freeze when the game ends
-        // we shouldn't just have it say 0 by default since the race can end before the timer
-        // reaches 0
-          this.props.isRunning ? <TimerContainer /> : null
-        }
         <GameTextContainer />
         <TypeInputContainer />
         <PlayerListContainer />

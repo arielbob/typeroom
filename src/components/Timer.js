@@ -1,7 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux'
 
-// TODO: move this component to separate file and use render function for different timers
 class Timer extends React.Component {
   constructor(props) {
     super(props)
@@ -37,14 +35,8 @@ class Timer extends React.Component {
   }
 
   render() {
-    return (
-      <h3>{this.state.time}</h3>
-    )
+    return this.props.render(this.state.time)
   }
 }
 
-const mapStateToProps = ({ raceTimer }) => ({
-  time: raceTimer
-})
-
-export default connect(mapStateToProps)(Timer)
+export default Timer

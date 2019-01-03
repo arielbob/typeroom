@@ -109,6 +109,8 @@ export const raceTimer = (state = 0, action) => {
   }
 }
 
+// TODO: server state should probably mirror this state, i.e. the names, when something is true/false
+// etc. should be consistent with the server
 export const isCounting = (state = false, action) => {
   switch (action.type) {
     case 'START_COUNTDOWN':

@@ -8,14 +8,42 @@ class Room {
     this.numWinners = numWinners
     this.playerIds = playerIds
     this.playersById = playersById
-    this.isRunning = false
+
+    this.isStarted = false // has the countdown or the race started?
+    this.isRunning = false // has the actual race started?
+
+    this.countdownTime = 0
+    this.countdownTimer = null
+
     this.currentTime = 0
     this.timer = null
+  }
+
+  startCountdown(callback) {
+    if (this.countdownTimer) clearTimeout(this.countdownTimer)
+
+    console.log('countdown started!')
+
+    this.isStarted = true
+    this.countdownTime = 3 // 3 seconds
+
+    this.countdownTimer = setInterval(() => {
+      this.countdownTime--
+
+      if (this.countdownTime < 0) {
+        console.log('countdown done!')
+        clearTimeout(this.countdownTimer)
+        callback()
+      }
+    }, 1000)
   }
 
   startRace(callback) {
     if (this.timer) clearTimeout(this.timer)
 
+    console.log('race started!');
+
+    this.isStarted = true
     this.isRunning = true
     this.currentTime = 20 // 20 seconds
 
@@ -26,7 +54,7 @@ class Room {
 
       if (this.currentTime < 0) {
         console.log('race done!')
-        this.resetRoom()
+        clearTimeout(this.timer)
         callback()
       }
     }, 1000)
@@ -36,7 +64,13 @@ class Room {
     this.numWinners = 0
     this.playerIds = []
     this.playersById = {}
+
+    this.isStarted = false
     this.isRunning = false
+
+    this.countdownTime = 0
+    clearInterval(this.countdownTimer)
+
     this.currentTime = 0
     clearInterval(this.timer)
   }

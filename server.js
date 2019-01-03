@@ -110,15 +110,28 @@ io.on('connection', async (socket) => {
       // send to everyone (including the new player themself) that a new player connected
       io.to(roomId).emit('join', player)
 
-      if (!room.isRunning) {
-        room.startRace(() => {
-          io.to(roomId).emit('text', room.text)
-          io.to(roomId).emit('players', room.playersById)
-          io.to(roomId).emit('removePlayer')
-          io.to(roomId).emit('endRace')
+      // isStarted: has the race or the countdown already started?
+      // isRunning: has the actual race started?
+      if (!room.isStarted && !room.isRunning) {
+        // start the countdown on the server
+        // send countdownStart to the client
+        // when countdown finishes, start the race on the server
+        // send startRace to the client
+        // when the race ends, send text, players, removePlayer, and endRace
+
+        room.startCountdown(() => {
+          room.startRace(() => {
+            room.resetRoom()
+            io.to(roomId).emit('text', room.text)
+            io.to(roomId).emit('players', room.playersById)
+            io.to(roomId).emit('removePlayer')
+            io.to(roomId).emit('endRace')
+          })
+
+          io.to(roomId).emit('startRace', room.currentTime)
         })
 
-        io.to(roomId).emit('startRace', room.currentTime)
+        io.to(roomId).emit('startCountdown', room.countdownTime)
       }
     }
   })

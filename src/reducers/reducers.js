@@ -1,29 +1,4 @@
-import { combineReducers } from 'redux'
-
-// NOTE: we might want to have a roomsById property to prevent race conditions,
-// but then that would mean creating a new game whenever a game is finished...
-// idk... maybe we can just reset the game?
-
-// state = {
-//   currentRoomId: 0,
-//   gameText: '',
-//   playersById: {
-//     0: {
-//       username: 'player1',
-//       nextWordId: 0,
-//       id: 0,
-//       place: null
-//     },
-//     1: {
-//       username: 'player2',
-//       nextWordId: 2,
-//       id: 1,
-//       place: null
-//     }
-//   }
-// }
-
-const errorMessage = (state = '', action) => {
+export const errorMessage = (state = '', action) => {
   const { type, error } = action
 
   switch (type) {
@@ -36,7 +11,7 @@ const errorMessage = (state = '', action) => {
   return state
 }
 
-const clientId = (state = null, action) => {
+export const clientId = (state = null, action) => {
   switch (action.type) {
     case 'SET_CLIENT_ID':
       return action.payload.clientId
@@ -45,7 +20,7 @@ const clientId = (state = null, action) => {
   }
 }
 
-const currentRoomId = (state = null, action) => {
+export const currentRoomId = (state = null, action) => {
   switch (action.type) {
     case 'OPEN_ROOM':
       return state ? action.payload.id : null
@@ -54,7 +29,7 @@ const currentRoomId = (state = null, action) => {
   }
 }
 
-const gameText = (state = '', action) => {
+export const gameText = (state = '', action) => {
   switch (action.type) {
     case 'SET_GAME_TEXT':
       return action.payload.text
@@ -63,7 +38,7 @@ const gameText = (state = '', action) => {
   }
 }
 
-const inputValue = (state = '', action) => {
+export const inputValue = (state = '', action) => {
   switch (action.type) {
     case 'SET_INPUT_VALUE':
       return action.payload.inputValue
@@ -72,7 +47,7 @@ const inputValue = (state = '', action) => {
   }
 }
 
-const player = (state = {}, action) => {
+export const player = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_PLAYER':
     case 'SET_NEXT_WORD_ID':
@@ -88,7 +63,7 @@ const player = (state = {}, action) => {
   }
 }
 
-const playersById = (state = {}, action) => {
+export const playersById = (state = {}, action) => {
   switch (action.type) {
     case 'SET_ALL_PLAYERS':
       return action.payload.playersById
@@ -105,7 +80,7 @@ const playersById = (state = {}, action) => {
   }
 }
 
-const isJoined = (state = false, action) => {
+export const isJoined = (state = false, action) => {
   switch (action.type) {
     case 'JOIN_SUCCESS':
       return true
@@ -116,7 +91,7 @@ const isJoined = (state = false, action) => {
   }
 }
 
-const countdownTimer = (state = 0, action) => {
+export const countdownTimer = (state = 0, action) => {
   switch (action.type) {
     case 'START_COUNTDOWN':
       return action.payload.time
@@ -125,7 +100,7 @@ const countdownTimer = (state = 0, action) => {
   }
 }
 
-const raceTimer = (state = 0, action) => {
+export const raceTimer = (state = 0, action) => {
   switch (action.type) {
     case 'START_RACE':
       return action.payload.time
@@ -134,7 +109,7 @@ const raceTimer = (state = 0, action) => {
   }
 }
 
-const isCounting = (state = false, action) => {
+export const isCounting = (state = false, action) => {
   switch (action.type) {
     case 'START_COUNTDOWN':
       return true
@@ -146,7 +121,7 @@ const isCounting = (state = false, action) => {
   }
 }
 
-const isRunning = (state = false, action) => {
+export const isRunning = (state = false, action) => {
   switch (action.type) {
     case 'START_RACE':
       return true
@@ -156,19 +131,3 @@ const isRunning = (state = false, action) => {
       return state
   }
 }
-
-const rootReducer = combineReducers({
-  errorMessage,
-  clientId,
-  currentRoomId,
-  gameText,
-  inputValue,
-  playersById,
-  countdownTimer,
-  raceTimer,
-  isJoined,
-  isCounting,
-  isRunning
-})
-
-export default rootReducer

@@ -15,7 +15,7 @@ import {
   setProgress,
   setPlace
 } from './actions'
-import rootReducer from './reducers'
+import rootReducer from './reducers/'
 
 const loggerMiddleware = createLogger()
 const store = createStore(

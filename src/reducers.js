@@ -116,10 +116,31 @@ const isJoined = (state = false, action) => {
   }
 }
 
+const countdownTimer = (state = 0, action) => {
+  switch (action.type) {
+    case 'START_COUNTDOWN':
+      return action.payload.time
+    default:
+      return state
+  }
+}
+
 const raceTimer = (state = 0, action) => {
   switch (action.type) {
     case 'START_RACE':
       return action.payload.time
+    default:
+      return state
+  }
+}
+
+const isCounting = (state = false, action) => {
+  switch (action.type) {
+    case 'START_COUNTDOWN':
+      return true
+    case 'START_RACE':
+    case 'END_RACE':
+      return false
     default:
       return state
   }
@@ -143,8 +164,10 @@ const rootReducer = combineReducers({
   gameText,
   inputValue,
   playersById,
+  countdownTimer,
   raceTimer,
   isJoined,
+  isCounting,
   isRunning
 })
 

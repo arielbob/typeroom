@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+// TODO: move this component to separate file and use render function for different timers
 class Timer extends React.Component {
   constructor(props) {
     super(props)

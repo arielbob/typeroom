@@ -19,6 +19,13 @@ class Room extends React.Component {
       <div>
         <ErrorMessage />
         {
+          this.props.isCounting ? <p>counting down...</p> : null
+        }
+        {
+          this.props.isRunning ? <p>running...</p> : null
+        }
+
+        {
         // TODO: we might want to have the timer freeze when the game ends
         // we shouldn't just have it say 0 by default since the race can end before the timer
         // reaches 0

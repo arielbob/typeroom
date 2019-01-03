@@ -7,6 +7,7 @@ import {
   setNextWordId,
   setGameText,
   setPlace,
+  startCountdown,
   startRace,
   endRace,
   leaveRoom
@@ -74,6 +75,9 @@ const eventHandlers = {
   },
   text: (dispatch, state, text) => {
     dispatch(setGameText(text))
+  },
+  startCountdown: (dispatch, state, time) => {
+    dispatch(startCountdown(time))
   },
   startRace: (dispatch, state, time) => {
     dispatch(startRace(time))

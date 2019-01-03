@@ -117,6 +117,13 @@ export const setPlace = (id, place) => ({
   }
 })
 
+export const startCountdown = (time) => ({
+  type: 'START_COUNTDOWN',
+  payload: {
+    time
+  }
+})
+
 export const startRace = (time) => ({
   type: 'START_RACE',
   payload: {

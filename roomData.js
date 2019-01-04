@@ -9,7 +9,7 @@ class Room {
     this.playerIds = playerIds
     this.playersById = playersById
 
-    this.isStarted = false // has the countdown or the race started?
+    this.isCounting = false // is the countdown going?
     this.isRunning = false // has the actual race started?
 
     this.countdownTime = 0
@@ -24,7 +24,7 @@ class Room {
 
     console.log('countdown started!')
 
-    this.isStarted = true
+    this.isCounting = true
     this.countdownTime = 3 // 3 seconds
 
     this.countdownTimer = setInterval(() => {
@@ -32,6 +32,7 @@ class Room {
 
       if (this.countdownTime < 0) {
         console.log('countdown done!')
+        this.isCounting = false
         clearTimeout(this.countdownTimer)
         callback()
       }
@@ -43,7 +44,6 @@ class Room {
 
     console.log('race started!');
 
-    this.isStarted = true
     this.isRunning = true
     this.currentTime = 20 // 20 seconds
 
@@ -54,6 +54,7 @@ class Room {
 
       if (this.currentTime < 0) {
         console.log('race done!')
+        this.isRunning = false
         clearTimeout(this.timer)
         callback()
       }
@@ -65,7 +66,7 @@ class Room {
     this.playerIds = []
     this.playersById = {}
 
-    this.isStarted = false
+    this.isCounting = false
     this.isRunning = false
 
     this.countdownTime = 0

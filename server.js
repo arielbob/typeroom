@@ -110,9 +110,7 @@ io.on('connection', async (socket) => {
       // send to everyone (including the new player themself) that a new player connected
       io.to(roomId).emit('join', player)
 
-      // isStarted: has the race or the countdown already started?
-      // isRunning: has the actual race started?
-      if (!room.isStarted && !room.isRunning) {
+      if (!room.isCounting && !room.isRunning) {
         // start the countdown on the server
         // send countdownStart to the client
         // when countdown finishes, start the race on the server

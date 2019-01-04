@@ -98,6 +98,7 @@ io.on('connection', async (socket) => {
   // send to connected client the game text, and the player list
   socket.emit('text', room.text)
   socket.emit('players', room.playersById)
+  if (room.isCounting) socket.emit('startCountdown', room.countdownTime)
   if (room.isRunning) socket.emit('startRace', room.currentTime)
 
   socket.on('join room', async () => {

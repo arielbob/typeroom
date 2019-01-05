@@ -23,6 +23,10 @@ export const leaveRoom = () => ({
   type: 'LEAVE_ROOM'
 })
 
+// TODO: we should check if the word is correct and update the player's currentWord in here.
+// we don't check for wins or actual progress; only if it matches the game text. this is so that
+// we don't have to wait for the server to update the player's word id and so we keep the typing
+// feel responsive
 export const setInputValue = (inputValue) => (dispatch) => {
   const spaceEntered = inputValue.charAt(inputValue.length - 1) === ' '
 

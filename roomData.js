@@ -10,7 +10,7 @@ class Room {
     this.playersById = playersById
 
     this.isCounting = false // is the countdown going?
-    this.isRunning = false // has the actual race started?
+    this.isRunning = false  // has the actual race started?
 
     this.countdownTime = 0
     this.countdownTimer = null

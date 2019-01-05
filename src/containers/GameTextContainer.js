@@ -1,9 +1,11 @@
 import { connect } from 'react-redux'
 import GameText from '../components/GameText'
 
-const mapStateToProps = ({ gameText, errorMessage }) => ({
+const mapStateToProps = ({ gameText, inputValue, isJoined, playersById, clientId, errorMessage }) => ({
   text: gameText,
-  isVisible: !errorMessage
+  isVisible: !errorMessage,
+  inputValue,
+  nextWordId: (isJoined && playersById[clientId]) ? playersById[clientId].nextWordId : null
 })
 
 export default connect(mapStateToProps)(GameText)

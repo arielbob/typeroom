@@ -22,6 +22,7 @@ class Root extends React.Component {
         <div>
           <Route exact path='/' render={() => <div>
             <h2>Welcome to TypeRoom.</h2>
+            <h3>Login</h3>
             <Login />
           </div>}></Route>
           <Route path='/room/:id' component={RoomContainer} />

@@ -55,6 +55,20 @@ app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath
 }))
 
+// app.use((err, req, res, next) => {
+//   console.error(err.stack)
+//   next(err)
+// })
+app.use((err, req, res, next) => {
+  let status = 500
+  if (err.status) status = err.status
+
+  res.status(status).json({
+    status,
+    message: err.message
+  })
+})
+
 const roomData = require('./roomData')
 const {
   rooms,

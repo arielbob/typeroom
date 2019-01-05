@@ -44,7 +44,10 @@ router.post('/login', function(req, res, next) {
     User.authenticate(email, password)
       .then(user => {
         req.session.userId = user._id
-        res.redirect('/profile')
+        res.json({
+          username: user.username,
+          email: user.email
+        })
       })
       .catch(next)
   } else {
@@ -64,7 +67,6 @@ router.post('/logout', function(req, res, next) {
   res.redirect('/')
 })
 
-// FIXME: i think this throws an error sometimes right after logging in
 router.get('/profile', function(req, res, next) {
   if (req.session.userId) {
     User.findById(req.session.userId).exec()
@@ -74,7 +76,9 @@ router.get('/profile', function(req, res, next) {
       }))
       .catch(next)
   } else {
-    return next()
+    const err = new Error('Profile not found')
+    err.status = 404
+    return next(err)
   }
 })
 

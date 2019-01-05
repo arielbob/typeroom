@@ -25,12 +25,14 @@ class Login extends React.Component {
         password: this.state.password
       })
       .then((res) => {
-        console.log(res)
+        this.props.success(res.data)
       })
       .catch((err) => {
-        this.setState({
-          error: err.response.data.message
-        })
+        if (err.response) {
+          this.setState({
+            error: err.response.data.message
+          })
+        }
       })
   }
 

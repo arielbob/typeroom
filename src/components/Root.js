@@ -5,7 +5,7 @@ import {
   Switch
 } from 'react-router-dom'
 import RoomContainer from '../containers/RoomContainer'
-import Login from './Login'
+import LoginContainer from '../containers/LoginContainer'
 
 class Root extends React.Component {
   createRoom() {
@@ -23,7 +23,7 @@ class Root extends React.Component {
           <Route exact path='/' render={() => <div>
             <h2>Welcome to TypeRoom.</h2>
             <h3>Login</h3>
-            <Login />
+            <LoginContainer />
           </div>}></Route>
           <Route path='/room/:id' component={RoomContainer} />
           {/* <button onClick={() => this.createRoom()}>Create Room</button> */}

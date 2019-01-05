@@ -37,7 +37,7 @@ export const setInputValue = (inputValue) => (dispatch, getState) => {
 
       // check if the word is correct so that we don't have to wait for the server
       // to send back a nextWordId or not
-      const { gameText, clientId, playersById } = getState()
+      const { gameText, clientId, playersById } = getState().game
       const player = playersById[clientId]
 
       if (player) {
@@ -79,7 +79,7 @@ export const setGameText = (text) => ({
 })
 
 export const setAllPlayers = (playersById) => (dispatch, getState) => {
-  if (playersById.hasOwnProperty(getState().clientId)) {
+  if (playersById.hasOwnProperty(getState().game.clientId)) {
     dispatch({ type: 'JOIN_SUCCESS'})
   }
 
@@ -100,7 +100,7 @@ export const setAllPlayers = (playersById) => (dispatch, getState) => {
 // then we check in the connection event if they already exist; if they don't, then we
 // dispatch addPlayer()
 export const addPlayer = (player) => (dispatch, getState) => {
-  if (player.id == getState().clientId) {
+  if (player.id == getState().game.clientId) {
     dispatch({ type: 'JOIN_SUCCESS' })
   }
 
@@ -116,7 +116,7 @@ export const addPlayer = (player) => (dispatch, getState) => {
 }
 
 export const setNextWordId = (id, nextWordId) => (dispatch, getState) => {
-  const { clientId, playersById } = getState()
+  const { clientId, playersById } = getState().game
   const player = playersById[clientId]
 
   // we check if the received nextWordId is greater since we're tracking the id on the client

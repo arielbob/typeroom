@@ -99,9 +99,10 @@ const eventHandlers = {
   }
 }
 
+// NOTE: the event handlers are only being passed the game state, not the entire redux state
 const initSockets = (socket, store) => {
   for (let handler in eventHandlers) {
-    socket.on(handler, eventHandlers[handler].bind(null, store.dispatch, store.getState()))
+    socket.on(handler, eventHandlers[handler].bind(null, store.dispatch, store.getState().game))
   }
 
   // socket.on('disconnect', (id) => {

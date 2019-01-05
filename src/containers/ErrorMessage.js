@@ -6,7 +6,7 @@ const ErrorMessage = ({ errorMessage }) => {
   return null
 }
 
-const mapStateToProps = ({ errorMessage }) => ({
+const mapStateToProps = ({game: { errorMessage }}) => ({
   errorMessage
 })
 

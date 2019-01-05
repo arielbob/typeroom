@@ -12,7 +12,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 })
 
-const mapStateToProps = ({ isJoined, isCounting, isRunning }) => ({
+const mapStateToProps = ({game: { isJoined, isCounting, isRunning }}) => ({
   isJoined,
   isCounting,
   isRunning

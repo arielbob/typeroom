@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import PlayerList from '../components/PlayerList'
 
-const mapStateToProps = ({ clientId, playersById, gameText }) => ({
+const mapStateToProps = ({game: { clientId, playersById, gameText }}) => ({
   clientId,
   playersById,
   textLength: gameText.split(' ').length

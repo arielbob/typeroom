@@ -13,18 +13,30 @@ ul {
 
 input[type='submit'], button {
   cursor: pointer;
-  background-color: #4254ff;
-  padding: 0 1em;
-  height: 2em;
-  border-radius: 5px;
   border: none;
   outline: none;
+}
+
+.btn {
+  background-color: #4254ff;
+  padding: 0.45em 1em;
+  height: 2em;
+  border-radius: 5px;
   color: white;
+  display: inline-block;
+  text-decoration: none;
   &:hover {
     background-color: #3346f4;
     transition: 0.2s;
   }
+  &--orange {
+    background-color: #fa542f;
+    &:hover {
+      background-color: #d64a1e;
+    }
+  }
 }
+
 
 .navbar {
   display: flex;

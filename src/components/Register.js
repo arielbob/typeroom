@@ -79,7 +79,7 @@ class Register extends React.Component {
           value={this.state.passwordConf}
           onChange={(e) => this.handleChange(e.target)}
         ></input>
-        <input className='login-register__submit' type='submit' value='Register' onClick={() => this.sendCredentials()}></input>
+        <button className='login-register__submit btn' type='submit' value='Register' onClick={() => this.sendCredentials()}>Register</button>
         or <span className='login-register__toggle' onClick={() => this.props.toggleForm()}>Login</span>
       </section>
     )

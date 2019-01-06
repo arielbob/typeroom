@@ -1,12 +1,14 @@
 import React from 'react'
 import axios from 'axios'
 
-class Login extends React.Component {
+class Register extends React.Component {
   constructor() {
     super()
     this.state = {
       email: '',
+      username: '',
       password: '',
+      passwordConf: '',
       error: null
     }
   }
@@ -18,9 +20,11 @@ class Login extends React.Component {
   }
 
   sendCredentials() {
-    axios.post('/login', {
+    axios.post('/register', {
         email: this.state.email,
-        password: this.state.password
+        username: this.state.username,
+        password: this.state.password,
+        passwordConf: this.state.passwordConf
       })
       .then((res) => {
         this.props.success(res.data)
@@ -37,29 +41,45 @@ class Login extends React.Component {
   render() {
     return (
       <section className='login-register'>
-        <h3 className='login-register__title'>Login</h3>
+        <h3 className='login-register__title'>Register</h3>
         {this.state.error ? <div className='login-register__error'>{this.state.error}</div> : null}
         <input
           className='login-register__input'
-          type="text"
-          name="email"
+          type='text'
+          name='email'
           placeholder='E-mail'
           value={this.state.email}
           onChange={(e) => this.handleChange(e.target)}
         ></input>
         <input
           className='login-register__input'
-          type="password"
-          name="password"
+          type='text'
+          name='username'
+          placeholder='Username'
+          value={this.state.username}
+          onChange={(e) => this.handleChange(e.target)}
+        ></input>
+        <input
+          className='login-register__input'
+          type='password'
+          name='password'
           placeholder='Password'
           value={this.state.password}
           onChange={(e) => this.handleChange(e.target)}
         ></input>
-        <input className='login-register__submit' type='submit' value='Login' onClick={() => this.sendCredentials()}></input>
-        or <a href='#' onClick={() => this.props.toggleForm()}>Register</a>
+        <input
+          className='login-register__input'
+          type='password'
+          name='passwordConf'
+          placeholder='Confirm Password'
+          value={this.state.passwordConf}
+          onChange={(e) => this.handleChange(e.target)}
+        ></input>
+        <input className='login-register__submit' type='submit' value='Register' onClick={() => this.sendCredentials()}></input>
+        or <a href='#' onClick={() => this.props.toggleForm()}>Login</a>
       </section>
     )
   }
 }
 
-export default Login
+export default Register

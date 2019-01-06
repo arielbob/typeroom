@@ -1,0 +1,9 @@
+import { connect } from 'react-redux'
+import Register from '../components/Register'
+
+const mapDispatchToProps = (dispatch) => ({
+  success: (user) => {
+  }
+})
+
+export default connect(null, mapDispatchToProps)(Register)

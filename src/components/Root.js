@@ -4,9 +4,9 @@ import {
   Route,
   Switch
 } from 'react-router-dom'
-import RoomContainer from '../containers/RoomContainer'
-import LoginContainer from '../containers/LoginContainer'
 import Navbar from './Navbar'
+import Home from './Home'
+import RoomContainer from '../containers/RoomContainer'
 
 class Root extends React.Component {
   createRoom() {
@@ -21,12 +21,8 @@ class Root extends React.Component {
     return (
       <Router>
         <div>
-          <Route exact path='/' render={() => <div>
-            <Navbar />
-            <h2>Welcome to TypeRoom.</h2>
-            <h3>Login</h3>
-            <LoginContainer />
-          </div>}></Route>
+          <Navbar />
+          <Route exact path='/' component={Home} />
           <Route path='/room/:id' component={RoomContainer} />
           {/* <button onClick={() => this.createRoom()}>Create Room</button> */}
         </div>

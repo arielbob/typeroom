@@ -11,8 +11,19 @@ ul {
   padding: 0;
 }
 
-li {
-  display: inline-block;
+input[type='submit'], button {
+  cursor: pointer;
+  background-color: #4254ff;
+  padding: 0 1em;
+  height: 2em;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  color: white;
+  &:hover {
+    background-color: #3346f4;
+    transition: 0.2s;
+  }
 }
 
 .navbar {
@@ -25,5 +36,48 @@ li {
     margin: 0;
   }
   &__nav {
+    li {
+      list-style: none;
+    }
+  }
+}
+
+.welcome {
+  text-align: center;
+}
+
+.login-register {
+  background-color: white;
+  width: 500px;
+  padding: 1em;
+  border-radius: 10px;
+  margin: 0 auto;
+  &__error {
+    background-color: #fadfdd;
+    border: 1px solid #f4aba3;
+    padding: 1em;
+    border-radius: 5px;
+    margin-bottom: 0.5em;
+  }
+  &__title {
+    margin: 0;
+    margin-bottom: 0.5em;
+  }
+  &__input {
+    display: block;
+    width: 100%;
+    border: 1px solid #c2c2c2;
+    margin-bottom: 0.5em;
+    height: 2em;
+    border-radius: 5px;
+    padding-left: 10px;
+    outline: none;
+    &:focus {
+      border: 1px solid #878787;
+      transition: 0.2s;
+    }
+  }
+  &__submit {
+    margin-right: 0.3em;
   }
 }

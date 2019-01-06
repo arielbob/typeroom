@@ -20,9 +20,13 @@ router.post('/register', function(req, res, next) {
     console.log('attempting to create user')
 
     User.create(userData)
-      .then(() => {
+      .then(user => {
         console.log('created user')
-        return res.redirect('/')
+        req.session.userId = user._id
+        res.json({
+          username: user.username,
+          email: user.email
+        })
       })
       .catch(next)
   } else {

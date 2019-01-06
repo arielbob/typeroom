@@ -16,7 +16,7 @@ router.post('/register', function(req, res, next) {
     password
   }
 
-  if (email && username && password) {
+  if (email.trim() && username.trim() && password) {
     console.log('attempting to create user')
 
     User.create(userData)

@@ -20,6 +20,10 @@ class Register extends React.Component {
   }
 
   sendCredentials() {
+    this.setState({
+      error: null
+    })
+
     axios.post('/register', {
         email: this.state.email,
         username: this.state.username,

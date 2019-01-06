@@ -18,6 +18,10 @@ class Login extends React.Component {
   }
 
   sendCredentials() {
+    this.setState({
+      error: null
+    })
+
     axios.post('/login', {
         email: this.state.email,
         password: this.state.password

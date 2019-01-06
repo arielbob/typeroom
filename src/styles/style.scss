@@ -33,13 +33,13 @@ input[type='submit'], button {
   display: inline-block;
   text-decoration: none;
   &:hover {
-    background-color: #3346f4;
+    background-color: #2336e8;
     transition: 0.2s;
   }
   &--orange {
-    background-color: #fa542f;
+    background-color: #e34242;
     &:hover {
-      background-color: #eb4510;
+      background-color: #b53b3b;
     }
   }
 }

@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom'
 import RoomContainer from '../containers/RoomContainer'
 import LoginContainer from '../containers/LoginContainer'
+import Navbar from './Navbar'
 
 class Root extends React.Component {
   createRoom() {
@@ -21,6 +22,7 @@ class Root extends React.Component {
       <Router>
         <div>
           <Route exact path='/' render={() => <div>
+            <Navbar />
             <h2>Welcome to TypeRoom.</h2>
             <h3>Login</h3>
             <LoginContainer />

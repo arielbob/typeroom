@@ -17,6 +17,9 @@ import {
 } from './actions'
 import rootReducer from './reducers/'
 
+import normalize from 'normalize.css'
+import styles from './styles/style.scss'
+
 const loggerMiddleware = createLogger()
 const store = createStore(
   rootReducer,

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { openRoom, joinRoom } from '../actions.js'
+import { openRoom, joinRoom } from '../actions/gameActions'
 import Room from '../components/Room'
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

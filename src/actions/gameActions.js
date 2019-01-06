@@ -1,12 +1,3 @@
-import io from 'socket.io-client'
-
-// TODO: add socket integration
-// TODO: add text highlighting for correct/incorrect typing
-// TODO: add WPM
-// this will not have access to the socket; they will only be able to emit actions
-// that go through the socket middleware
-// we can use this socket middleware with thunk for conditional dispatches
-
 // socket emitting actions
 export const openRoom = (id) => {
   return {

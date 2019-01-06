@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import TypeInput from '../components/TypeInput'
-import { setInputValue } from '../actions'
+import { setInputValue } from '../actions/gameActions'
 
 const mapStateToProps = ({game: { inputValue, errorMessage, gameText, isJoined, isRunning }}) => ({
   value: inputValue,

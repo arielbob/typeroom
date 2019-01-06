@@ -11,7 +11,7 @@ import {
   startRace,
   endRace,
   leaveRoom
-} from './actions'
+} from './actions/gameActions'
 
 let socket = null
 

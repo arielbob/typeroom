@@ -7,14 +7,6 @@ import { createStore, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'
 import thunk from 'redux-thunk'
 import { socketMiddleware } from './sockets'
-import {
-  openRoom,
-  setGameText,
-  setAllPlayers,
-  addPlayer,
-  setProgress,
-  setPlace
-} from './actions'
 import rootReducer from './reducers/'
 
 import normalize from 'normalize.css'

@@ -18,14 +18,15 @@ class Home extends React.Component {
 
   render() {
     return (
-      <>
+      <section className='home'>
         <h2 className='welcome'>Welcome to TypeRoom.</h2>
         {
           this.state.currentForm == 'login' ?
           <LoginContainer toggleForm={() => this.toggleForm() }/> :
           <Register toggleForm={() => this.toggleForm() }/>
         }
-      </>
+        <button className='home__create-room btn btn--orange'>Create Room as Guest</button>
+      </section>
     )
   }
 }

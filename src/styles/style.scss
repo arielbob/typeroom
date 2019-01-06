@@ -17,6 +17,13 @@ input[type='submit'], button {
   outline: none;
 }
 
+.home {
+  text-align: center;
+  &__create-room {
+    margin-top: 1em;
+  }
+}
+
 .btn {
   background-color: #4254ff;
   padding: 0.45em 1em;
@@ -32,7 +39,7 @@ input[type='submit'], button {
   &--orange {
     background-color: #fa542f;
     &:hover {
-      background-color: #d64a1e;
+      background-color: #eb4510;
     }
   }
 }

@@ -22,6 +22,8 @@ const store = createStore(
   )
 )
 
+import { authenticate } from './actions/loginActions'
+
 // store.dispatch(openRoom(0))
 // store.dispatch(setGameText('Type this text!'))
 // store.dispatch(setAllPlayers({
@@ -40,6 +42,14 @@ const store = createStore(
 // store.dispatch(setProgress(0, 0.2))
 // store.dispatch(setProgress(1, 1))
 // store.dispatch(setPlace(1, 1))
+
+// check if a user key is set in the localStorage (we set that key when we log in)
+// if it is, we authenticate using cookies to see if the user is actually authenticated
+// we don't use the localStorage value in actual authentication; we only use it to see
+// if we should check and update redux state
+if (localStorage.getItem('user')) {
+  store.dispatch(authenticate())
+}
 
 render(
   <Provider store={store}>

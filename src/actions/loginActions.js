@@ -9,3 +9,21 @@ export const success = (user) => {
     payload: { user }
   }
 }
+
+export const failure = () => {
+  localStorage.removeItem('user')
+
+  return {
+    type: 'LOGIN_FAILURE'
+  }
+}
+
+export const authenticate = () => (dispatch) => {
+  axios.get('/auth')
+    .then((res) => {
+      dispatch(success(res.data))
+    })
+    .catch(() => {
+      dispatch(failure())
+    })
+}

@@ -86,4 +86,19 @@ router.get('/profile', function(req, res, next) {
   }
 })
 
+router.get('/auth', function(req, res, next) {
+  if (req.session.userId) {
+    User.findById(req.session.userId).exec()
+      .then(user => res.json({
+        username: user.username,
+        email: user.email
+      }))
+      .catch(next)
+  } else {
+    const err = new Error('Could not authenticate')
+    err.status = 400
+    return next(err)
+  }
+})
+
 module.exports = router

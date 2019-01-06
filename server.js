@@ -60,12 +60,11 @@ app.use(webpackDevMiddleware(compiler, {
 //   next(err)
 // })
 app.use((err, req, res, next) => {
-  let status = 500
-  if (err.status) status = err.status
+  if (err.status >= 500) console.error(err.message)
 
   res.status(status).json({
-    status,
-    message: err.message
+    status: err.status,
+    message: (err.status >= 500) ? 'Something bad happened...' : err.message
   })
 })
 

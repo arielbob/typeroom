@@ -1,12 +1,10 @@
 import { connect } from 'react-redux'
 import Login from '../components/Login'
+import { success } from '../actions/loginActions'
 
 const mapDispatchToProps = (dispatch) => ({
   success: (user) => {
-    dispatch({
-      type: 'LOGIN_SUCCESS',
-      payload: { user }
-    })
+    dispatch(success(user))
   }
 })
 

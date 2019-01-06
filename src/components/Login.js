@@ -56,7 +56,7 @@ class Login extends React.Component {
           onChange={(e) => this.handleChange(e.target)}
         ></input>
         <input className='login-register__submit' type='submit' value='Login' onClick={() => this.sendCredentials()}></input>
-        or <a href='#' onClick={() => this.props.toggleForm()}>Register</a>
+        or <span className='login-register__toggle' onClick={() => this.props.toggleForm()}>Register</span>
       </section>
     )
   }

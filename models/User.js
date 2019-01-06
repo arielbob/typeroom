@@ -31,6 +31,32 @@ var userSchema = new mongoose.Schema({
 })
 
 userSchema.pre('save', function(next) {
+  var that = this
+
+  User.findOne({ $or: [ { email: that.email }, { username: that.username} ] }).exec()
+    .then(user => {
+      if (user) {
+        let message = ''
+        if (user.username == that.username) {
+          message = 'Username already exists'
+          if (user.email == that.email) {
+            message = 'Username and e-mail already exist'
+          }
+        } else if (user.email == that.email) {
+          message = 'E-mail already exists'
+        }
+
+        const err = new Error(message)
+        err.status = 400
+
+        next(err)
+      } else {
+        next()
+      }
+    })
+})
+
+userSchema.pre('save', function(next) {
   var user = this
 
   bcrypt.hash(user.password, 10)

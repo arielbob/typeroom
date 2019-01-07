@@ -6,7 +6,7 @@ router.post('/create', (req, res) => {
   const roomId = createRoom()
   console.log('Room created:', rooms[roomId])
 
-  res.redirect('/room/' + roomId)
+  res.json({ roomId })
 })
 
 module.exports = router

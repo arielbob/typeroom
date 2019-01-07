@@ -2,7 +2,8 @@ const User = require('./models/User')
 const shortid = require('shortid')
 
 class Room {
-  constructor(text, numWinners = 0, playerIds = [], playersById = {}) {
+  constructor(id, text, numWinners = 0, playerIds = [], playersById = {}) {
+    this.id = id
     this.text = text
     this.wordArray = text.split(' ')
     this.numWinners = numWinners
@@ -157,26 +158,22 @@ class Room {
 
 const text = 'Type me :)'
 let rooms = {
-  0: new Room(text),
-  1: new Room('This is the text from room 1')
+  0: new Room(0, text),
+  1: new Room(1, 'This is the text from room 1')
 }
 
-let numRooms = 2
-
 const createRoom = () => {
-  const id = numRooms
+  const id = shortid.generate()
   const text = 'This is the text from room ' + id
 
-  rooms[id] = new Room(text)
-  numRooms++
+  rooms[id] = new Room(id, text)
 
   return rooms[id]
 }
 
 const roomData = {
   rooms,
-  createRoom,
-  numRooms
+  createRoom
 }
 
 module.exports = roomData

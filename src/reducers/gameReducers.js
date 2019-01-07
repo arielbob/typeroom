@@ -1,3 +1,4 @@
+// TODO: i should change this if we're going to have multiple places where an error can show up
 export const errorMessage = (state = '', action) => {
   const { type, error } = action
 

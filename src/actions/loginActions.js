@@ -1,4 +1,4 @@
-// TODO: eventually move all the requests here
+// TODO: eventually move all the requests here or in a services file
 import axios from 'axios'
 
 export const success = (user) => {
@@ -20,7 +20,7 @@ export const failure = () => {
 
 export const authenticate = () => (dispatch) => {
   axios.get('/auth')
-    .then((res) => {
+    .then(res => {
       dispatch(success(res.data))
     })
     .catch(() => {

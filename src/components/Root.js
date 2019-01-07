@@ -1,25 +1,18 @@
 import React from 'react'
 import {
-  BrowserRouter as Router,
+  Router,
   Route,
   Switch
 } from 'react-router-dom'
+import history from '../history'
 import Navbar from './Navbar'
 import Home from './Home'
 import RoomContainer from '../containers/RoomContainer'
 
 class Root extends React.Component {
-  createRoom() {
-    fetch('/create', {
-      method: 'post'
-    }).then(res => {
-      if (res.redirected) window.location.href = res.url
-    })
-  }
-
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <div>
           <Navbar />
           <Route exact path='/' component={Home} />

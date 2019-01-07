@@ -1,4 +1,5 @@
 import axios from 'axios'
+import history from '../history'
 
 export const createRoom = () => (dispatch) => {
   dispatch({ type: 'CREATE_ROOM' })
@@ -15,7 +16,7 @@ export const createRoom = () => (dispatch) => {
 }
 
 export const success = (roomId) => {
-  window.location = '/room' + roomId
+  history.push('/room/' + roomId)
 
   return {
     type: 'CREATE_ROOM_SUCCESS'

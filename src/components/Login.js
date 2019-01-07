@@ -26,10 +26,10 @@ class Login extends React.Component {
         email: this.state.email,
         password: this.state.password
       })
-      .then((res) => {
+      .then(res => {
         this.props.success(res.data)
       })
-      .catch((err) => {
+      .catch(err => {
         if (err.response) {
           this.setState({
             error: err.response.data.message
@@ -42,7 +42,7 @@ class Login extends React.Component {
     return (
       <section className='login-register'>
         <h3 className='login-register__title'>Login</h3>
-        {this.state.error ? <div className='login-register__error'>{this.state.error}</div> : null}
+        {this.state.error ? <div className='error'>{this.state.error}</div> : null}
         <input
           className='login-register__input'
           type="text"

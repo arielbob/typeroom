@@ -65,6 +65,14 @@ input[type='submit'], button {
   text-align: center;
 }
 
+.error {
+  background-color: #fadfdd;
+  border: 1px solid #f4aba3;
+  padding: 1em;
+  border-radius: 5px;
+  margin-bottom: 0.5em;
+}
+
 .login-register {
   background-color: white;
   width: 500px;
@@ -72,13 +80,6 @@ input[type='submit'], button {
   border-radius: 10px;
   margin: 0 auto;
   text-align: left;
-  &__error {
-    background-color: #fadfdd;
-    border: 1px solid #f4aba3;
-    padding: 1em;
-    border-radius: 5px;
-    margin-bottom: 0.5em;
-  }
   &__title {
     margin: 0;
     margin-bottom: 0.5em;

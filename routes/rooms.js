@@ -3,10 +3,12 @@ const roomData = require('../roomData')
 const { rooms, createRoom } = roomData
 
 router.post('/create', (req, res) => {
-  const roomId = createRoom()
-  console.log('Room created:', rooms[roomId])
+  const room = createRoom()
+  console.log('Room created:', room)
 
-  res.json({ roomId })
+  res.json({
+    roomId: room.id
+  })
 })
 
 module.exports = router

@@ -17,6 +17,12 @@ class Room extends React.Component {
     this.props.joinRoom()
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.roomId != prevProps.roomId) {
+      this.props.openRoom()
+    }
+  }
+
   render() {
     return (
       <div>

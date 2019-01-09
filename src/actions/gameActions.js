@@ -6,6 +6,12 @@ export const openRoom = (id) => {
   }
 }
 
+export const closeRoom = () => {
+  return {
+    type: 'CLOSE_ROOM'
+  }
+}
+
 export const joinRoom = () => ({
   type: 'JOIN_ROOM'
 })

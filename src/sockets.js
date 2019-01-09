@@ -17,7 +17,11 @@ let socket = null
 
 // sending socket events via redux actions
 export const socketMiddleware = (store) => (next) => (action) => {
+  // NOTE: this stuff might be better in actions...
   switch (action.type) {
+    case 'CLOSE_ROOM':
+      if (socket) socket.close()
+      break;
     case 'OPEN_ROOM':
       const { id } = action.payload
 
@@ -27,17 +31,12 @@ export const socketMiddleware = (store) => (next) => (action) => {
       })
       initSockets(socket, store)
       break;
-  }
-
-  if (socket) {
-    switch (action.type) {
-      case 'INPUT_WORD':
-        socket.emit('word input', action.payload.word)
-        break;
-      case 'JOIN_ROOM':
-        socket.emit('join room')
-        break;
-    }
+    case 'INPUT_WORD':
+      if (socket) socket.emit('word input', action.payload.word)
+      break;
+    case 'JOIN_ROOM':
+      if (socket) socket.emit('join room')
+      break;
   }
 
   return next(action)

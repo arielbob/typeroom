@@ -10,7 +10,8 @@ import {
   startCountdown,
   startRace,
   endRace,
-  leaveRoom
+  leaveRoom,
+  setError
 } from './actions/gameActions'
 
 let socket = null
@@ -47,6 +48,12 @@ const eventHandlers = {
   connect: (dispatch) => {
     console.log('connected to socket')
     // dispatch(setClientId(socket.id))
+  },
+  connect_error: (dispatch) => {
+    dispatch(setError('Could not connect to the room'))
+  },
+  reconnect_error: (dispatch) => {
+    dispatch(setError('Could not reconnect to the room'))
   },
   clientInfo: (dispatch, state, id) => {
     console.log(id)
@@ -97,7 +104,7 @@ const eventHandlers = {
     if (error == 'roomNotFound') {
       message = 'The requested room could not be found'
     }
-    dispatch({ type: 'GAME_ERROR', payload: { error: message } })
+    dispatch(setError(message))
   }
 }
 

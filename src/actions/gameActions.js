@@ -20,6 +20,11 @@ export const leaveRoom = () => ({
   type: 'LEAVE_ROOM'
 })
 
+export const setError = (error) => ({
+  type: 'GAME_ERROR',
+  error
+})
+
 export const setInputValue = (inputValue) => (dispatch, getState) => {
   const spaceEntered = inputValue.charAt(inputValue.length - 1) === ' '
 

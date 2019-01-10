@@ -1,7 +1,7 @@
 export const error = (state = '', action) => {
   switch (action.type) {
     case 'GAME_ERROR':
-      return action.payload.error
+      return action.error
     case 'OPEN_ROOM':
     case 'CLOSE_ROOM':
       return ''

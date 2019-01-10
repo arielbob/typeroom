@@ -90,7 +90,7 @@ io.on('connection', async (socket) => {
   const room = rooms[roomId]
 
   if (!room) {
-    socket.emit('serverError', 'Room does not exist!')
+    socket.emit('gameError', 'roomNotFound')
     socket.disconnect()
     return
   }

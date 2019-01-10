@@ -1,15 +1,13 @@
-// TODO: i should change this if we're going to have multiple places where an error can show up
-export const errorMessage = (state = '', action) => {
-  const { type, error } = action
-
-  switch (type) {
-    case 'SET_CLIENT_ID':
+export const error = (state = '', action) => {
+  switch (action.type) {
+    case 'GAME_ERROR':
+      return action.payload.error
+    case 'OPEN_ROOM':
+    case 'CLOSE_ROOM':
       return ''
+    default:
+      return state
   }
-
-  if (error) return error
-
-  return state
 }
 
 export const clientId = (state = null, action) => {

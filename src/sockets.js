@@ -92,9 +92,12 @@ const eventHandlers = {
     console.log('disconnected from socket')
     // dispatch(removePlayer(id))
   },
-  serverError: (dispatch, state, error) => {
-    console.log(error)
-    dispatch({ type: 'ERROR', error })
+  gameError: (dispatch, state, error) => {
+    let message = 'An error occurred...'
+    if (error == 'roomNotFound') {
+      message = 'The requested room could not be found'
+    }
+    dispatch({ type: 'GAME_ERROR', payload: { error: message } })
   }
 }
 

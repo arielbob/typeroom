@@ -26,6 +26,6 @@ export const success = (roomId) => {
 export const failure = (error) => {
   return {
     type: 'CREATE_ROOM_FAILURE',
-    error
+    payload: { error }
   }
 }

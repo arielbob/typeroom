@@ -4,7 +4,7 @@ export const error = (state = '', action) => {
     case 'CREATE_ROOM_SUCCESS':
       return ''
     case 'CREATE_ROOM_FAILURE':
-      return action.error
+      return action.payload.error
     default:
       return state
   }

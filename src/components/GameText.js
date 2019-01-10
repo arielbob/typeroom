@@ -9,7 +9,7 @@ const GameText = ({ isVisible, text, nextWordId, inputValue }) => {
     }
   }
 
-  return <p className='room__text'>{text ? text : 'Loading text...'}</p>
+  return <p className='room__text'>{text ? text : 'Loading room...'}</p>
 }
 
 // return a component where the typed text is highlighted

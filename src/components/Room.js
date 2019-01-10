@@ -25,9 +25,9 @@ class Room extends React.Component {
 
   render() {
     return (
-      <div className='room-container'>
+      <div className='game-container'>
         <ErrorMessage />
-        <div className='room'>
+        <div className='game'>
           {
             // TODO: we might want to have the timer freeze when the game ends
             // we shouldn't just have it say 0 by default since the race can end before the timer

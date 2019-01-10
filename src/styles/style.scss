@@ -26,6 +26,12 @@
       background-color: #b53b3b;
     }
   }
+  &--green {
+    background-color: #20bd2f;
+    &:hover {
+      background-color: #137d30;
+    }
+  }
 }
 
 

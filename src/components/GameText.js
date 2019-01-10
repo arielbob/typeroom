@@ -7,11 +7,9 @@ const GameText = ({ isVisible, text, nextWordId, inputValue }) => {
     if (nextWordId !== null) {
       return highlightedText(text, nextWordId, inputValue)
     }
-
-    return <p>{text}</p>
   }
 
-  return <p>Loading text...</p>
+  return <p className='room__text'>{text ? text : 'Loading text...'}</p>
 }
 
 // return a component where the typed text is highlighted
@@ -21,7 +19,7 @@ const highlightedText = (text, nextWordId, inputValue) => {
 
   // if the player reached the end, currentWord will be null
   if (!currentWord) {
-    return <p><span style={{backgroundColor: 'yellow'}}>{text}</span></p>
+    return <p className='room__text'><span style={{backgroundColor: 'yellow'}}>{text}</span></p>
   }
 
   // get the typed text by slicing from 0 to the nextWordId
@@ -32,8 +30,8 @@ const highlightedText = (text, nextWordId, inputValue) => {
   // get the rest of the text, which is the text that is untyped
   const untyped = text.slice(typed.length)
 
-  return <p>
-    <span style={{backgroundColor: 'yellow'}}>{typed}</span>
+  return <p className='room__text'>
+    <span className='room__text room__text--typed'>{typed}</span>
     {untyped}
   </p>
 }

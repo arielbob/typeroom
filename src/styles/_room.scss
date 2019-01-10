@@ -8,4 +8,11 @@
   padding: 1em;
   background-color: white;
   border-radius: 5px;
+  &__text {
+    margin: 0;
+    margin-bottom: 0.5em;
+    &--typed {
+      background-color: yellow;
+    }
+  }
 }

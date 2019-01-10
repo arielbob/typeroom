@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 const ErrorMessage = ({ error }) => {
-  if (error) return <p>{error}</p>
+  if (error) return <div className='error'>{error}</div>
   return null
 }
 

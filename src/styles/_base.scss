@@ -1,0 +1,18 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f0f0f0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+input[type='submit'], button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}

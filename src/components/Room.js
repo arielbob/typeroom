@@ -25,36 +25,38 @@ class Room extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='room-container'>
         <ErrorMessage />
-        {
-          // TODO: we might want to have the timer freeze when the game ends
-          // we shouldn't just have it say 0 by default since the race can end before the timer
-          // reaches 0
-        }
-        {
-          this.props.isCounting ?
+        <div className='room'>
+          {
+            // TODO: we might want to have the timer freeze when the game ends
+            // we shouldn't just have it say 0 by default since the race can end before the timer
+            // reaches 0
+          }
+          {
+            this.props.isCounting ?
             <div>
               <p>counting down...</p>
               <CountdownTimer render={(time) => <h3>{time}</h3>} />
             </div>
             : null
-        }
-        {
-          this.props.isRunning ?
+          }
+          {
+            this.props.isRunning ?
             <div>
               <p>running</p>
               <RaceTimer render={(time) => <h3 style={{color: 'red'}}>{time}</h3>} />
             </div>
             : null
-        }
+          }
 
-        <GameTextContainer />
-        <TypeInputContainer />
-        <PlayerListContainer />
-        {
-          !this.props.isJoined ? <button onClick={() => this.joinRoom()}>Join Room</button> : null
-        }
+          <GameTextContainer />
+          <TypeInputContainer />
+          <PlayerListContainer />
+          {
+            !this.props.isJoined ? <button onClick={() => this.joinRoom()}>Join Room</button> : null
+          }
+        </div>
       </div>
     )
   }

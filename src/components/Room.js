@@ -3,6 +3,7 @@ import ErrorMessage from '../containers/ErrorMessage'
 
 import RaceTimer from '../containers/RaceTimer'
 import CountdownTimer from '../containers/CountdownTimer'
+import Countdown from './Countdown'
 
 import GameTextContainer from '../containers/GameTextContainer'
 import TypeInputContainer from '../containers/TypeInputContainer'
@@ -33,22 +34,10 @@ class Room extends React.Component {
             // we shouldn't just have it say 0 by default since the race can end before the timer
             // reaches 0
           }
-          {
-            this.props.isCounting ?
-            <div>
-              <p>counting down...</p>
-              <CountdownTimer render={(time) => <h3>{time}</h3>} />
-            </div>
-            : null
-          }
-          {
-            this.props.isRunning ?
-            <div>
-              <p>running</p>
-              <RaceTimer render={(time) => <h3 style={{color: 'red'}}>{time}</h3>} />
-            </div>
-            : null
-          }
+          <div className='game__timers'>
+            { this.props.isCounting ? <CountdownTimer render={Countdown} /> : null }
+            { this.props.isRunning ? <RaceTimer render={(time) => <p className='game__timer'>{time}</p>} /> : null }
+          </div>
 
           <PlayerListContainer />
           <GameTextContainer />

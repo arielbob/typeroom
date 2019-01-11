@@ -26,12 +26,12 @@ class Room {
     console.log('countdown started!')
 
     this.isCounting = true
-    this.countdownTime = 3 // 3 seconds
+    this.countdownTime = 5 // 3 seconds
 
     this.countdownTimer = setInterval(() => {
       this.countdownTime--
 
-      if (this.countdownTime < 0) {
+      if (this.countdownTime <= 0) {
         console.log('countdown done!')
         this.isCounting = false
         clearTimeout(this.countdownTimer)

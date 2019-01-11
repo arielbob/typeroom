@@ -37,5 +37,10 @@
   }
   &__url {
     width: 100%;
+    border: none;
+    border-radius: 5px;
+    height: 1.5em;
+    background-color: #f0f0f0;
+    padding: 0.5em;
   }
 }

@@ -176,8 +176,6 @@ io.on('connection', async (socket) => {
             // TODO: put these in a single function
             // we don't user the destructured properties here since, those are outdated.
             // we want to send the new data after resetRoom()
-            io.to(roomId).emit('text', room.text)
-            io.to(roomId).emit('players', room.playersById)
             io.to(roomId).emit('removePlayer')
             io.to(roomId).emit('endRace')
           }

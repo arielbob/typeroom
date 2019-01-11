@@ -8,6 +8,7 @@
   padding: 1em;
   background-color: white;
   border-radius: 5px;
+  margin-bottom: 1em;
   &__text {
     margin-bottom: 0.5em;
     &--typed {
@@ -24,5 +25,17 @@
     height: 2em;
     margin-bottom: 0.5em;
     background-color: #f0f0f0;
+  }
+}
+
+.share {
+  background-color: white;
+  border-radius: 5px;
+  padding: 1em;
+  &__text {
+    margin-bottom: 0.5em;
+  }
+  &__url {
+    width: 100%;
   }
 }

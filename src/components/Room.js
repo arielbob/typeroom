@@ -48,6 +48,10 @@ class Room extends React.Component {
             null
           }
         </div>
+        <div className='share'>
+          <p className='share__text'>Share this link with your friends!</p>
+          <input className='share__url' value={window.location.href} readOnly />
+        </div>
       </div>
     )
   }

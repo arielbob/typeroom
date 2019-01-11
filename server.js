@@ -135,8 +135,6 @@ io.on('connection', async (socket) => {
         room.startCountdown(() => {
           room.startRace(() => {
             room.resetRoom()
-            io.to(roomId).emit('text', room.text)
-            io.to(roomId).emit('players', room.playersById)
             io.to(roomId).emit('removePlayer')
             io.to(roomId).emit('endRace')
           })
@@ -144,6 +142,8 @@ io.on('connection', async (socket) => {
           io.to(roomId).emit('startRace', room.currentTime)
         })
 
+        io.to(roomId).emit('text', room.text)
+        io.to(roomId).emit('players', room.playersById)
         io.to(roomId).emit('startCountdown', room.countdownTime)
       }
     }

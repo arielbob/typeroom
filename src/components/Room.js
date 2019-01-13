@@ -44,7 +44,7 @@ class Room extends React.Component {
           <TypeInputContainer />
           {
             !this.props.isJoined ?
-            <button className='btn btn--green' onClick={() => this.joinRoom()}>Join Room</button> :
+            <button className='game__join-btn btn btn--green' onClick={() => this.joinRoom()}>Join Room</button> :
             null
           }
         </div>

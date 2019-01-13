@@ -1,10 +1,10 @@
 .countdown {
   height: 3em;
+  margin: 0 auto 1em auto;
   &__text {
     margin-top: 0;
     margin-bottom: 0.5em;
   }
-  margin: 0 auto 1em auto;
 }
 
 .lights {
@@ -14,15 +14,17 @@
     height: 1em;
     margin-right: 0.5em;
     border-radius: 50%;
+    transition: 0.3s;
 
-    &:nth-child(1) { background-color: #d16a6a; }
-    &:nth-child(2) { background-color: #dfd76e; }
-    &:nth-child(3) { background-color: #7abf68; }
+    &:nth-child(1) { background-color: #c2a0a0; }
+    &:nth-child(2) { background-color: #d1ceab; }
+    &:nth-child(3) { background-color: #a4b99e; }
 
     &--active {
-      &:nth-child(1) { background-color: #f22424; }
-      &:nth-child(2) { background-color: #f2de24; }
-      &:nth-child(3) { background-color: #4fe01c; }
+      transform: translateY(-2px);
+      &:nth-child(1) { background-color: #e31818; }
+      &:nth-child(2) { background-color: #fbb90f; }
+      &:nth-child(3) { background-color: #4acd1c; }
     }
   }
 }

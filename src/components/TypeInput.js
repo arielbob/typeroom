@@ -18,7 +18,7 @@ class TypeInput extends React.Component {
         value={this.props.value}
         onChange={(e) => this.props.handleChange(e.target.value)}
         disabled={this.props.disabled}
-        className='game__input'>
+        className={'game__input' + (this.props.hasMistake ? ' game__input--mistake' : '')}>
       </input>
     )
   }

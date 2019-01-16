@@ -2,9 +2,10 @@ import { connect } from 'react-redux'
 import TypeInput from '../components/TypeInput'
 import { setInputValue } from '../actions/gameActions'
 
-const mapStateToProps = ({game: { inputValue, error, gameText, isJoined, isRunning }}) => ({
+const mapStateToProps = ({game: { inputValue, error, hasMistake, gameText, isJoined, isRunning }}) => ({
   value: inputValue,
-  disabled: !!error || !(isJoined && isRunning) || !gameText
+  disabled: !!error || !(isJoined && isRunning) || !gameText,
+  hasMistake
 })
 
 const mapDispatchToProps = (dispatch) => ({

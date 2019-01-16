@@ -11,6 +11,8 @@ class Room {
     this.playerIds = playerIds
     this.playersById = playersById
 
+    this.startTimestamp = null
+
     this.isCounting = false // is the countdown going?
     this.isRunning = false  // has the actual race started?
 
@@ -51,6 +53,7 @@ class Room {
 
     this.isRunning = true
     this.currentTime = this.raceTime
+    this.startTimestamp = Date.now()
 
     // NOTE: this is only accurate to 1 second so... client time may be off by like
     // at most 1 second
@@ -71,6 +74,8 @@ class Room {
     this.numWinners = 0
     this.playerIds = []
     this.playersById = {}
+
+    this.startTimestamp = null
 
     this.isCounting = false
     this.isRunning = false
@@ -166,7 +171,7 @@ class Room {
       const player = this.playersById[id]
       if (!player.place) {
         const typed = this.wordArray.slice(0, player.nextWordId).join(' ')
-        const delta = this.raceTime - this.currentTime
+        const delta = Date.now() - this.startTimestamp
         player.wpm = calculateWpm(typed, delta)
       }
     }

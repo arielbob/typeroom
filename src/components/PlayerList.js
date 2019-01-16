@@ -15,17 +15,22 @@ const placeWord = (place) => {
 const PlayerList = ({ clientId, playersById, textLength }) => (
   <ul className='player-list'>
     {
-      Object.keys(playersById).filter(id => playersById[id]).map(id => (
-        <li className='player-item' key={id}>
-          <p className='player-item__name'>
-            {playersById[id].place ? '(' + placeWord(playersById[id].place) + ') ' : null}
-            {id == clientId ? 'You' : playersById[id].username}
-          </p>
-          <div className='progress'>
-            <div className='progress__bar' style={{ width: (playersById[id].nextWordId / textLength) * 100 + '%' }}></div>
-          </div>
-        </li>
-      ))
+      Object.keys(playersById).filter(id => playersById[id]).map(id => {
+        const player = playersById[id]
+
+        return (
+          <li className='player-item' key={id}>
+            <p className='player-item__name'>
+              {player.place ? '(' + placeWord(player.place) + ') ' : null}
+              {id == clientId ? 'You' : player.username}
+              <span className='player-item__wpm'>{Math.round(player.wpm)} WPM</span>
+            </p>
+            <div className='progress'>
+              <div className='progress__bar' style={{ width: (player.nextWordId / textLength) * 100 + '%' }}></div>
+            </div>
+          </li>
+        )
+      })
     }
   </ul>
 )

@@ -11,6 +11,9 @@
   &:last-child {
     margin-bottom: 2em;
   }
+  &__wpm {
+    float: right;
+  }
 }
 
 .progress {

@@ -176,7 +176,8 @@ class Room {
 const text = 'Type me :)'
 let rooms = {
   0: new Room(0, text),
-  1: new Room(1, 'This is the text from room 1')
+  1: new Room(1, 'This is the text from room 1'),
+  test: new Room('test', 'The quick brown fox jumps over the lazy dog')
 }
 
 const createRoom = () => {

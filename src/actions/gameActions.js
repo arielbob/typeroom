@@ -34,6 +34,7 @@ export const setInputValue = (inputValue) => (dispatch, getState) => {
 
   const nextWord = gameText.split(' ')[player.nextWordId]
 
+  // TODO: these ifs might be able to be cleaned up
   if (spaceEntered) {
     if (trimmedVal.length > 0) {
       // check if the word is correct so that we don't have to wait for the server
@@ -82,6 +83,20 @@ export const setInputValue = (inputValue) => (dispatch, getState) => {
       type: 'SET_INPUT_VALUE',
       payload: { inputValue }
     })
+
+    if ((player.nextWordId == gameText.split(' ').length - 1) && (inputValue == nextWord)) {
+      dispatch({
+        type: 'INPUT_WORD',
+        payload: {
+          word: inputValue
+        }
+      })
+
+      dispatch({
+        type: 'SET_INPUT_VALUE',
+        payload: { inputValue: '' }
+      })
+    }
   }
 }
 

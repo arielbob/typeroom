@@ -25,6 +25,9 @@
     height: 2em;
     background-color: #f0f0f0;
     padding: 0.5em;
+    &--mistake {
+      background-color: #eec4c4;
+    }
   }
   &__join-btn {
     margin-top: 0.5em;

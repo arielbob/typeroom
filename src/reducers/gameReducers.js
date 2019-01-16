@@ -32,6 +32,19 @@ export const currentRoomId = (state = null, action) => {
   }
 }
 
+export const hasMistake = (state = false, action) => {
+  switch (action.type) {
+    case 'SET_INPUT_MISTAKE':
+      return action.payload.hasMistake
+    case 'START_RACE':
+    case 'END_RACE':
+    case 'CLOSE_ROOM':
+      return false
+    default:
+      return state
+  }
+}
+
 export const gameText = (state = '', action) => {
   switch (action.type) {
     case 'SET_GAME_TEXT':
@@ -47,6 +60,8 @@ export const inputValue = (state = '', action) => {
   switch (action.type) {
     case 'SET_INPUT_VALUE':
       return action.payload.inputValue
+    case 'START_RACE':
+    case 'END_RACE':
     case 'CLOSE_ROOM':
       return ''
     default:

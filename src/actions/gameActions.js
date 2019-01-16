@@ -27,37 +27,57 @@ export const setError = (error) => ({
 
 export const setInputValue = (inputValue) => (dispatch, getState) => {
   const spaceEntered = inputValue.charAt(inputValue.length - 1) === ' '
+  const trimmedVal = inputValue.trim()
+
+  const { gameText, clientId, playersById } = getState().game
+  const player = playersById[clientId]
+
+  const nextWord = gameText.split(' ')[player.nextWordId]
 
   if (spaceEntered) {
-    const trimmedVal = inputValue.trim()
     if (trimmedVal.length > 0) {
-      // empty the text box when they hit space
-      dispatch({
-        type: 'SET_INPUT_VALUE',
-        payload: { inputValue: '' }
-      })
-
       // check if the word is correct so that we don't have to wait for the server
       // to send back a nextWordId or not
-      const { gameText, clientId, playersById } = getState().game
-      const player = playersById[clientId]
-
       if (player) {
-        const { nextWordId } = player
-        if (trimmedVal == gameText.split(' ')[nextWordId]) {
-          dispatch(setNextWordId(clientId, nextWordId + 1))
+        if (trimmedVal == nextWord) {
+          // empty the text box
+          dispatch({
+            type: 'SET_INPUT_VALUE',
+            payload: { inputValue: '' }
+          })
+
+          dispatch(setNextWordId(clientId, player.nextWordId + 1))
+
+          // send the input to the server
+          dispatch({
+            type: 'INPUT_WORD',
+            payload: {
+              word: trimmedVal
+            }
+          })
+        } else {
+          dispatch({
+            type: 'SET_INPUT_VALUE',
+            payload: { inputValue }
+          })
+
+          dispatch({
+            type: 'SET_INPUT_MISTAKE',
+            payload: { hasMistake: true }
+          })
         }
       }
-
-      // send the input to the server
-      dispatch({
-        type: 'INPUT_WORD',
-        payload: {
-          word: trimmedVal
-        }
-      })
     }
   } else {
+    const hasMistake = (inputValue.length > nextWord.length) || (inputValue != nextWord.slice(0, inputValue.length))
+
+    if (getState().game.hasMistake != hasMistake) {
+      dispatch({
+        type: 'SET_INPUT_MISTAKE',
+        payload: { hasMistake }
+      })
+    }
+
     dispatch({
       type: 'SET_INPUT_VALUE',
       payload: { inputValue }

@@ -1,4 +1,5 @@
 const User = require('./models/User')
+const calculateWpm = require('./util/calculateWpm')
 const shortid = require('shortid')
 
 class Room {
@@ -16,6 +17,8 @@ class Room {
     this.countdownTime = 0
     this.countdownTimer = null
 
+    // TODO: actually calculate a good race time based on text length
+    this.raceTime = 20 // 20 seconds
     this.currentTime = 0
     this.timer = null
   }
@@ -40,24 +43,26 @@ class Room {
     }, 1000)
   }
 
-  startRace(callback) {
+  // TODO: we can probably move all the io calls to a separate module
+  startRace(updateCallback, endCallback) {
     if (this.timer) clearTimeout(this.timer)
 
     console.log('race started!');
 
     this.isRunning = true
-    this.currentTime = 20 // 20 seconds
+    this.currentTime = this.raceTime
 
     // NOTE: this is only accurate to 1 second so... client time may be off by like
     // at most 1 second
     this.timer = setInterval(() => {
       this.currentTime--
+      updateCallback()
 
       if (this.currentTime < 0) {
         console.log('race done!')
         this.isRunning = false
         clearTimeout(this.timer)
-        callback()
+        endCallback()
       }
     }, 1000)
   }
@@ -118,7 +123,8 @@ class Room {
         id,
         isGuest,
         nextWordId: 0,
-        place: null
+        place: null,
+        wpm: 0
       }
       this.playerIds.push(id)
     }
@@ -151,6 +157,17 @@ class Room {
         }
 
         break;
+      }
+    }
+  }
+
+  updateWpms() {
+    for (let id in this.playersById) {
+      const player = this.playersById[id]
+      if (!player.place) {
+        const typed = this.wordArray.slice(0, player.nextWordId).join(' ')
+        const delta = this.raceTime - this.currentTime
+        player.wpm = calculateWpm(typed, delta)
       }
     }
   }

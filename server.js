@@ -106,12 +106,20 @@ io.on('connection', async (socket) => {
     playerId = room.findJoinedPlayer(socket.request.session.userId)
     if (playerId) {
       socket.emit('clientInfo', playerId)
+      socket.emit('join', room.playersById[playerId])
     }
+  }
+
+  const resetAndEndRace = () => {
+    room.resetRoom()
+    io.to(roomId).emit('removePlayer')
+    io.to(roomId).emit('endRace')
   }
 
   // send to connected client the game text, and the player list
   socket.emit('text', room.text)
   socket.emit('players', room.playersById)
+
   if (room.isCounting) socket.emit('startCountdown', room.countdownTime)
   if (room.isRunning) socket.emit('startRace', room.currentTime)
 
@@ -132,16 +140,21 @@ io.on('connection', async (socket) => {
         // send startRace to the client
         // when the race ends, send text, players, removePlayer, and endRace
 
+        // TODO: we might want to just send all the player data every few seconds
+        // rather than individually every time someone types a word
+        // it might be more efficient...
+        const update = () => {
+          room.updateWpms()
+          io.to(roomId).emit('players', room.playersById)
+        }
+
         room.startCountdown(() => {
-          room.startRace(() => {
-            room.resetRoom()
-            io.to(roomId).emit('removePlayer')
-            io.to(roomId).emit('endRace')
-          })
+          room.startRace(update, resetAndEndRace)
 
           io.to(roomId).emit('startRace', room.currentTime)
         })
 
+        // send all the new data when a new game starts
         io.to(roomId).emit('text', room.text)
         io.to(roomId).emit('players', room.playersById)
         io.to(roomId).emit('startCountdown', room.countdownTime)
@@ -171,13 +184,7 @@ io.on('connection', async (socket) => {
           if (player.place == playerIds.length) {
             console.log('Game is over!')
             room.updateStats()
-            room.resetRoom()
-
-            // TODO: put these in a single function
-            // we don't user the destructured properties here since, those are outdated.
-            // we want to send the new data after resetRoom()
-            io.to(roomId).emit('removePlayer')
-            io.to(roomId).emit('endRace')
+            resetAndEndRace()
           }
         }
       }

@@ -111,6 +111,9 @@ io.on('connection', async (socket) => {
   }
 
   const resetAndEndRace = () => {
+    // send the player data once before resetting since resetRoom() will stop the
+    // update interval and we want everyone to have the final game data
+    io.to(roomId).emit('players', room.playersById)
     room.resetRoom()
     io.to(roomId).emit('removePlayer')
     io.to(roomId).emit('endRace')
@@ -175,11 +178,11 @@ io.on('connection', async (socket) => {
         player.nextWordId++
 
         // send the progress of whoever just typed a word to everyone in the room (including the typer)
-        io.to(roomId).emit('progress', playerId, player.nextWordId)
+        // io.to(roomId).emit('progress', playerId, player.nextWordId)
 
         if (player.nextWordId == wordArray.length) {
           player.place = ++rooms[roomId].numWinners
-          io.to(roomId).emit('place', playerId, player.place)
+          // io.to(roomId).emit('place', playerId, player.place)
 
           if (player.place == playerIds.length) {
             console.log('Game is over!')

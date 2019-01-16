@@ -80,15 +80,28 @@ export const setGameText = (text) => ({
   }
 })
 
-export const setAllPlayers = (playersById) => (dispatch, getState) => {
-  if (playersById.hasOwnProperty(getState().game.clientId)) {
-    dispatch({ type: 'JOIN_SUCCESS'})
+export const setAllPlayers = (updatedPlayersById) => (dispatch, getState) => {
+  const { clientId, isJoined, playersById } = getState()
+  // if (!isJoined && playersById.hasOwnProperty(clientId)) {
+  //   dispatch({ type: 'JOIN_SUCCESS'})
+  // }
+
+  if (isJoined) {
+    const player = playersById[clientId]
+    const updatedPlayer = updatedPlayersById[clientId]
+
+    // we check if the received nextWordId is greater since we're tracking the id on the client
+    // as well. we don't want the text highlighting to jerk back if there's some delay in receiving
+    // a message from the server
+    if (updatedPlayer.nextWordId < player.nextWordId) {
+      updatedPlayer.nextWordId = player.nextWordId
+    }
   }
 
   dispatch({
     type: 'SET_ALL_PLAYERS',
     payload: {
-      playersById
+      playersById: updatedPlayersById
     }
   })
 }

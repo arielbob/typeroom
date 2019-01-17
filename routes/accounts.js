@@ -28,7 +28,15 @@ router.post('/register', function(req, res, next) {
           email: user.email
         })
       })
-      .catch(next)
+      .catch(err => {
+        if (err.errors && err.errors['email'] && err.errors['email'].kind == 'isinvalid') {
+          const error = new Error(err.errors['email'].message)
+          error.status = 400
+          return next(error)
+        }
+
+        next(err)
+      })
   } else {
     const err = new Error('All fields must be filled')
     err.status = 400

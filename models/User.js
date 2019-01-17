@@ -1,12 +1,15 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+const { isEmail } = require('validator')
 
+// TODO: catch email validation error
 var userSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
     required: true,
-    trim: true
+    trim: true,
+    validate: [isEmail, 'Please enter a valid e-mail']
   },
   username: {
     type: String,

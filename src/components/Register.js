@@ -46,7 +46,7 @@ class Register extends React.Component {
     return (
       <section className='login-register'>
         <h3 className='login-register__title'>Register</h3>
-        {this.state.error ? <div className='login-register__error'>{this.state.error}</div> : null}
+        {this.state.error ? <div className='error'>{this.state.error}</div> : null}
         <input
           className='login-register__input'
           type='text'

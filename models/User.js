@@ -14,7 +14,14 @@ var userSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true,
-    trim: true
+    trim: true,
+    validate: {
+      validator: (v) => {
+        return /^[a-zA-Z0-9_-]*$/.test(v)
+      },
+      type: 'isinvalid',
+      message: 'Your username can only contain letters, numbers, underscores, and/or dashes'
+    }
   },
   password: {
     type: String,

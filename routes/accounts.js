@@ -29,10 +29,18 @@ router.post('/register', function(req, res, next) {
         })
       })
       .catch(err => {
-        if (err.errors && err.errors['email'] && err.errors['email'].kind == 'isinvalid') {
-          const error = new Error(err.errors['email'].message)
-          error.status = 400
-          return next(error)
+        if (err.errors) {
+          if (err.errors['email'] && err.errors['email'].kind == 'isinvalid') {
+            const error = new Error(err.errors['email'].message)
+            error.status = 400
+            return next(error)
+          }
+
+          if (err.errors['username'] && err.errors['username'].kind == 'isinvalid') {
+            const error = new Error(err.errors['username'].message)
+            error.status = 400
+            return next(error)
+          }
         }
 
         next(err)

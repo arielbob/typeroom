@@ -1,6 +1,6 @@
 import React from 'react'
 import LoginContainer from '../containers/LoginContainer'
-import Register from './Register'
+import RegisterContainer from '../containers/RegisterContainer'
 import CreateRoomButton from '../containers/CreateRoomButton'
 
 class Home extends React.Component {
@@ -24,7 +24,7 @@ class Home extends React.Component {
         {
           this.state.currentForm == 'login' ?
           <LoginContainer toggleForm={() => this.toggleForm() }/> :
-          <Register toggleForm={() => this.toggleForm() }/>
+          <RegisterContainer toggleForm={() => this.toggleForm() }/>
         }
         <CreateRoomButton className='home__create-room'/>
       </section>

@@ -1,4 +1,4 @@
-export const loggedIn = (state = false, action) => {
+export const isLoggedIn = (state = false, action) => {
   switch (action.type) {
     case 'LOGIN_SUCCESS':
       return true

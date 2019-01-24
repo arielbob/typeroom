@@ -2,20 +2,20 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createRoom } from '../actions/createRoomActions'
 
-const CreateRoomButton = ({ loggedIn, error, className, createRoom }) => (
+const CreateRoomButton = ({ isLoggedIn, error, className, createRoom }) => (
   <React.Fragment>
     {error ? <div className='error'>{error}</div> : null}
     <button
       className={'btn btn--orange ' + (className || '')}
       onClick={() => createRoom()}
       >
-      { 'Create Room' + (loggedIn ? '' : ' as Guest')}
+      { 'Create Room' + (isLoggedIn ? '' : ' as Guest')}
     </button>
   </React.Fragment>
 )
 
 const mapStateToProps = ({ authentication, roomCreation }, { className }) => ({
-  loggedIn: authentication.loggedIn,
+  isLoggedIn: authentication.isLoggedIn,
   error: roomCreation.error,
   className
 })

@@ -10,6 +10,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(closeRoom())
     dispatch(openRoom(ownProps.match.params.id))
   },
+  closeRoom: () => {
+    dispatch(closeRoom())
+  },
   joinRoom: () => {
     dispatch(joinRoom())
   }

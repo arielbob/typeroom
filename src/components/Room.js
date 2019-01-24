@@ -14,8 +14,8 @@ class Room extends React.Component {
     this.props.openRoom()
   }
 
-  joinRoom() {
-    this.props.joinRoom()
+  componentWillUnmount() {
+    this.props.closeRoom()
   }
 
   componentDidUpdate(prevProps) {
@@ -44,7 +44,7 @@ class Room extends React.Component {
           <TypeInputContainer />
           {
             !this.props.isJoined ?
-            <button className='game__join-btn btn btn--green' onClick={() => this.joinRoom()}>Join Room</button> :
+            <button className='game__join-btn btn btn--green' onClick={() => this.props.joinRoom()}>Join Room</button> :
             null
           }
         </div>

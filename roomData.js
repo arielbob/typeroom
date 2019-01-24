@@ -194,9 +194,18 @@ const createRoom = () => {
   return rooms[id]
 }
 
+const deleteRoom = (id) => {
+  if (rooms[id]) {
+    rooms[id].resetRoom()
+    delete rooms[id]
+    console.log('deleted ' + id)
+  }
+}
+
 const roomData = {
   rooms,
-  createRoom
+  createRoom,
+  deleteRoom
 }
 
 module.exports = roomData

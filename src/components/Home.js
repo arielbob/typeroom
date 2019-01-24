@@ -21,15 +21,23 @@ class Home extends React.Component {
     return (
       <section className='home'>
         <h2 className='welcome'>Welcome to TypeRoom.</h2>
-        {
-          this.state.currentForm == 'login' ?
-          <LoginContainer toggleForm={() => this.toggleForm() }/> :
-          <RegisterContainer toggleForm={() => this.toggleForm() }/>
-        }
+        <RegisterLogin isLoggedIn={this.props.isLoggedIn} currentForm={this.state.currentForm} />
         <CreateRoomButton className='home__create-room'/>
       </section>
     )
   }
+}
+
+const RegisterLogin = ({isLoggedIn, currentForm}) => {
+  if (!isLoggedIn) {
+    if (currentForm == 'login') {
+      return <LoginContainer toggleForm={() => this.toggleForm() }/>
+    } else {
+      return <RegisterContainer toggleForm={() => this.toggleForm() }/>
+    }
+  }
+
+  return null
 }
 
 export default Home

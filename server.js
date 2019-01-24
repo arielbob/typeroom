@@ -74,7 +74,8 @@ const {
   rooms,
   resetRoom,
   addPlayer,
-  findJoinedPlayer
+  findJoinedPlayer,
+  deleteRoom
 } = roomData
 
 io.use((socket, next) => {
@@ -195,7 +196,9 @@ io.on('connection', async (socket) => {
   })
 
   socket.on('disconnecting', () => {
-    console.log('A user disconnected...');
+  })
+
+  socket.on('disconnect', () => {
     // don't remove the player when they disconnect
     // we reset players when game resets and then people just join in; i.e. there isn't a
     // need for removing players when they disconnect
@@ -204,6 +207,16 @@ io.on('connection', async (socket) => {
     if (room.playersById[playerId]) {
       io.to(roomId).emit('disconnect', playerId)
     }
+
+    // TODO: we might actually want to keep the room alive for a bit longer, but this is fine for now
+    console.log('socket disconnected')
+    io.sockets.in(roomId).clients((err, clients) => {
+      if (err) throw err
+
+      console.log(clients)
+
+      if (clients.length <= 0) deleteRoom(roomId)
+    })
   })
 })
 

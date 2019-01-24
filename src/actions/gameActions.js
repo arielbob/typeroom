@@ -85,6 +85,8 @@ export const setInputValue = (inputValue) => (dispatch, getState) => {
     })
 
     if ((player.nextWordId == gameText.split(' ').length - 1) && (inputValue == nextWord)) {
+      dispatch(setNextWordId(clientId, player.nextWordId + 1))
+      
       dispatch({
         type: 'INPUT_WORD',
         payload: {

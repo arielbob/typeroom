@@ -1,4 +1,5 @@
 const User = require('./models/User')
+const Text = require('./models/Text')
 const calculateWpm = require('./util/calculateWpm')
 const shortid = require('shortid')
 
@@ -31,7 +32,7 @@ class Room {
     console.log('countdown started!')
 
     this.isCounting = true
-    this.countdownTime = 5 // 3 seconds
+    this.countdownTime = 5 // 5 seconds
 
     this.countdownTimer = setInterval(() => {
       this.countdownTime--
@@ -185,11 +186,25 @@ let rooms = {
   test: new Room('test', 'The quick brown fox jumps over the lazy dog')
 }
 
-const createRoom = () => {
+const createRoom = async () => {
   const id = shortid.generate()
-  const text = 'This is the text from room ' + id
+  // const text = 'This is the text from room ' + id
+  let randomText
 
-  rooms[id] = new Room(id, text)
+  try {
+    // get a random text
+    const texts = await Text.aggregate([
+      { $sample: { size: 1 } },
+    ]).exec()
+    // aggregate returns array of documents, but we only have one, so we get first document and its text string
+    randomText = texts[0].text
+  } catch(err) {
+    console.log(err)
+    // not sure if we should like return an error here or something
+    // just keep the default values if findById throws an error
+  }
+
+  rooms[id] = new Room(id, randomText)
 
   return rooms[id]
 }

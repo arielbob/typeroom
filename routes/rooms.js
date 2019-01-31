@@ -2,8 +2,8 @@ const router = require('express').Router()
 const roomData = require('../roomData')
 const { rooms, createRoom } = roomData
 
-router.post('/create', (req, res) => {
-  const room = createRoom()
+router.post('/create', async (req, res) => {
+  const room = await createRoom()
   console.log('Room created:', room)
 
   res.json({

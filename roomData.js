@@ -20,8 +20,9 @@ class Room {
     this.countdownTime = 0
     this.countdownTimer = null
 
-    // TODO: actually calculate a good race time based on text length
-    this.raceTime = 20 // 20 seconds
+    // conservative estimate of average characters per minute is 100
+    // (60 sec / 100 chars) * (text length) = estimated average time to complete
+    this.raceTime = Math.round(text.length * 0.6)
     this.currentTime = 0
     this.timer = null
   }

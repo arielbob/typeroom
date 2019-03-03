@@ -17,6 +17,7 @@ const io = require('socket.io')(http)
 
 const accountsRoutes = require('./routes/accounts')
 const roomsRoutes = require('./routes/rooms')
+const statsRoutes = require('./routes/stats')
 
 // for logging objects
 const util = require('util')
@@ -49,6 +50,7 @@ app.use(sessionMiddleware)
 
 app.use(accountsRoutes)
 app.use(roomsRoutes)
+app.use(statsRoutes)
 
 app.use(history())
 app.use(webpackDevMiddleware(compiler, {

@@ -28,6 +28,16 @@ var userSchema = new mongoose.Schema({
     required: true
   },
   stats: {
+    wpm: {
+      total: {
+        type: Number,
+        default: 0
+      },
+      average: {
+        type: Number,
+        default: 0
+      }
+    },
     races: {
       type: Number,
       default: 0

@@ -1,19 +1,19 @@
 .login-register {
   background-color: white;
-  padding: 1em;
+  padding: 1.5em;
   border-radius: 10px;
   text-align: left;
   margin-left: 2rem;
   flex-basis: 400px;
   &__title {
     margin: 0;
-    margin-bottom: 0.5em;
+    margin-bottom: 1rem;
   }
   &__input {
     display: block;
     width: 100%;
     border: 1px solid #c2c2c2;
-    margin-bottom: 0.5em;
+    margin-bottom: 1rem;
     height: 2em;
     border-radius: 5px;
     padding-left: 10px;

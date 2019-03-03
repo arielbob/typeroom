@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "build": "webpack --config webpack.prod.js",
-    "dev": "nodemon server --watch server.js --watch routes --watch models"
+    "dev": "nodemon server --watch server.js --watch routes --watch models --watch util --watch roomData.js"
   },
   "author": "Ariel Bobadilla",
   "license": "MIT",

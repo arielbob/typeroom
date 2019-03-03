@@ -140,10 +140,30 @@ class Room {
   }
 
   updateStats() {
-    // find the logged in users
+    // find the logged in, placed users
     const userIds = this.playerIds.filter(id => {
-      return !this.playersById[id].isGuest
+      return !this.playersById[id].isGuest && this.playersById[id].place !== null
     })
+
+    // save players since it's going to get deleted and we need it in the callback for updating wpms
+    const players = this.playersById
+
+    User.find({
+      _id: { $in: userIds }
+    })
+      .exec()
+      .then(users => {
+        users.forEach(u => {
+          const newTotalWpm = u.stats.wpm.total + players[u._id].wpm
+          const newAvgWpm = newTotalWpm / (u.stats.races + 1)
+
+          // we might want to use aggregate instead?
+          User.updateOne({ _id: u._id }, {
+            'stats.wpm.total': newTotalWpm,
+            'stats.wpm.average': newAvgWpm
+          }).exec()
+        })
+      })
 
     // increment the races stat for all logged in users
     User.updateMany(

@@ -41,7 +41,7 @@ class Login extends React.Component {
   render() {
     return (
       <section className='login-register'>
-        <h3 className='login-register__title'>Login</h3>
+        <h2 className='login-register__title'>Login</h2>
         {this.state.error ? <div className='error'>{this.state.error}</div> : null}
         <input
           className='login-register__input'

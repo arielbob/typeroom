@@ -2,9 +2,10 @@
 @import "_game";
 @import "_countdown";
 @import "_players";
+@import "_welcome";
 
 .home {
-  text-align: center;
+  margin-left: 2rem;
   &__create-room {
     margin-top: 1em;
   }
@@ -54,7 +55,6 @@
 }
 
 .welcome {
-  text-align: center;
   margin-bottom: 0;
 }
 

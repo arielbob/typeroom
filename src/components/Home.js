@@ -3,6 +3,7 @@ import LoginContainer from '../containers/LoginContainer'
 import RegisterContainer from '../containers/RegisterContainer'
 import CreateRoomButton from '../containers/CreateRoomButton'
 import Top10 from '../containers/Top10'
+import Welcome from './Welcome'
 
 class Home extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class Home extends React.Component {
   render() {
     return (
       <section className='home'>
-        <h2 className='welcome'>Welcome to TypeRoom.</h2>
+        <Welcome />
         <RegisterLogin isLoggedIn={this.props.isLoggedIn} currentForm={this.state.currentForm} toggleForm={() => this.toggleForm()} />
         <CreateRoomButton className='home__create-room'/>
         <Top10 />

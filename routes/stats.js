@@ -13,9 +13,9 @@ router.get('/top10', (req, res, next) => {
         stats: user.stats
       }))
 
-      res.json({
+      res.json([
         ...topUsers
-      })
+      ])
     })
     .catch(next)
 })

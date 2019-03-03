@@ -1,0 +1,16 @@
+.welcome {
+  margin-bottom: 2.5rem;
+  &__greeting {
+    font-size: 3rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  &__name {
+    color: #5a14ed;
+  }
+  &__tagline {
+    margin-top: 0;
+    margin-bottom: 2rem;
+    line-height: 2rem;
+  }
+}

@@ -1,7 +1,6 @@
 import React from 'react'
 import LoginContainer from '../containers/LoginContainer'
 import RegisterContainer from '../containers/RegisterContainer'
-import CreateRoomButton from '../containers/CreateRoomButton'
 import Top10 from '../containers/Top10'
 import Welcome from './Welcome'
 
@@ -22,10 +21,11 @@ class Home extends React.Component {
   render() {
     return (
       <section className='home'>
-        <Welcome />
-        <RegisterLogin isLoggedIn={this.props.isLoggedIn} currentForm={this.state.currentForm} toggleForm={() => this.toggleForm()} />
-        <CreateRoomButton className='home__create-room'/>
-        <Top10 />
+        <div className='home__container'>
+          <Welcome />
+          <RegisterLogin isLoggedIn={this.props.isLoggedIn} currentForm={this.state.currentForm} toggleForm={() => this.toggleForm()} />
+          {/* <Top10 /> */}
+        </div>
       </section>
     )
   }

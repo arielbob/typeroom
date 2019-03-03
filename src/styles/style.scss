@@ -3,13 +3,26 @@
 @import "_countdown";
 @import "_players";
 @import "_welcome";
+@import "_login-register";
 
 .home {
-  margin-left: 2rem;
-  &__create-room {
-    margin-top: 1em;
+  &__container {
+    display: flex;
+    margin: 2rem 2rem 0;
+    max-width: 1100px;
+    justify-content: space-between;
+    align-items: flex-start;
   }
 }
+
+@media screen and (max-width: 992px) {
+  .home {
+    &__container {
+      flex-direction: column;
+    }
+  }
+}
+
 
 .btn {
   background-color: #4254ff;
@@ -54,49 +67,10 @@
   }
 }
 
-.welcome {
-  margin-bottom: 0;
-}
-
 .error {
   background-color: #fadfdd;
   border: 1px solid #f4aba3;
   padding: 1em;
   border-radius: 5px;
   margin-bottom: 1em;
-}
-
-.login-register {
-  background-color: white;
-  width: 500px;
-  padding: 1em;
-  border-radius: 10px;
-  margin: 0 auto;
-  text-align: left;
-  margin-top: 1em;
-  &__title {
-    margin: 0;
-    margin-bottom: 0.5em;
-  }
-  &__input {
-    display: block;
-    width: 100%;
-    border: 1px solid #c2c2c2;
-    margin-bottom: 0.5em;
-    height: 2em;
-    border-radius: 5px;
-    padding-left: 10px;
-    outline: none;
-    &:focus {
-      border: 1px solid #878787;
-      transition: 0.2s;
-    }
-  }
-  &__submit {
-    margin-right: 0.3em;
-  }
-  &__toggle {
-    cursor: pointer;
-    text-decoration: underline;
-  }
 }

@@ -1,30 +1,40 @@
 .player-list {
   list-style-type: none;
-}
-
-.player-item {
-  display: block;
-  margin-bottom: 1em;
-  &__name {
-    margin-bottom: 1rem;
-  }
-  &:last-child {
-    margin-bottom: 2em;
-  }
-  &__wpm {
-    float: right;
-  }
+  padding: 0 2rem;
+  margin-bottom: 2rem;
 }
 
 .progress {
-  width: 100%;
-  height: 1rem;
+  flex-grow: 1;
   background-color: #f0f0f0;
-  border-radius: 2.5px;
+  border-radius: 10px;
   overflow: hidden;
+  border: 1px solid #d5d5d5;
   &__bar {
     background-color: #fc4525;
     height: 100%;
     transition: 0.2s;
+  }
+}
+
+.player-item {
+  margin-bottom: 0.5rem;
+  align-items: baseline;
+  &__wpm {
+    flex-basis: 70px;
+    text-align: right;
+    color: #414141;
+    font-size: 0.8rem;
+    align-self:center;
+    margin-bottom: 0;
+    margin-left: 0.5rem;
+  }
+  &__bar {
+    display: flex;
+  }
+  &__name {
+    flex-basis: 100px;
+    margin-bottom: 0;
+    border-radius: 5px;
   }
 }

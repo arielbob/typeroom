@@ -4,10 +4,12 @@
 }
 
 .game {
-  padding: 2rem;
-  background-color: white;
-  border-radius: 5px;
   margin-bottom: 1em;
+  &__text-container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 5px;
+  }
   &__text {
     margin-bottom: 2rem;
     line-height: 2rem;

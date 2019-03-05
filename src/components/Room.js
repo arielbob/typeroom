@@ -40,13 +40,15 @@ class Room extends React.Component {
           </div>
 
           <PlayerListContainer />
-          <GameTextContainer />
-          <TypeInputContainer />
-          {
-            !this.props.isJoined ?
-            <button className='game__join-btn btn btn--green' onClick={() => this.props.joinRoom()}>Join Room</button> :
-            null
-          }
+          <section className='game__text-container'>
+            <GameTextContainer />
+            <TypeInputContainer />
+            {
+              !this.props.isJoined ?
+              <button className='game__join-btn btn btn--green' onClick={() => this.props.joinRoom()}>Join Room</button> :
+              null
+            }
+          </section>
         </div>
         <div className='share'>
           <p className='share__text'>Share this link with your friends!</p>

@@ -4,12 +4,16 @@
 @import "_players";
 @import "_welcome";
 @import "_login-register";
+@import "_player-cell";
+@import "_leaderboard";
 
 .home {
   &__container {
-    display: flex;
     margin: 2rem 2rem 0;
     max-width: 1100px;
+  }
+  &__header {
+    display: flex;
     justify-content: space-between;
     align-items: flex-start;
   }
@@ -22,7 +26,6 @@
     }
   }
 }
-
 
 .btn {
   background-color: #4254ff;

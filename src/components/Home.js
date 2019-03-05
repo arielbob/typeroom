@@ -22,9 +22,11 @@ class Home extends React.Component {
     return (
       <section className='home'>
         <div className='home__container'>
-          <Welcome />
-          <RegisterLogin isLoggedIn={this.props.isLoggedIn} currentForm={this.state.currentForm} toggleForm={() => this.toggleForm()} />
-          {/* <Top10 /> */}
+          <section className='home__header'>
+            <Welcome />
+            <RegisterLogin isLoggedIn={this.props.isLoggedIn} currentForm={this.state.currentForm} toggleForm={() => this.toggleForm()} />
+          </section>
+          <Top10 />
         </div>
       </section>
     )

@@ -1,0 +1,20 @@
+.player-cell {
+  list-style-type: none;
+  &__header {
+    display: flex;
+    flex-direction: row;
+    vertical-align: baseline;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  &__wpm, &__wins {
+    color: #535353;
+  }
+  &__title {
+    margin: 0;
+  }
+  &__wpm {
+    font-size: 1rem;
+  }
+}

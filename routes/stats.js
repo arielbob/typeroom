@@ -10,7 +10,10 @@ router.get('/top10', (req, res, next) => {
     .then(users => {
       const topUsers = users.map(user => ({
         username: user.username,
-        stats: user.stats
+        stats: {
+          avgWpm: user.stats.wpm.average,
+          wins: user.stats.wins
+        }
       }))
 
       res.json([

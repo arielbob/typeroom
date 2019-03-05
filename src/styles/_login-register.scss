@@ -1,14 +1,10 @@
 .login-register {
   background-color: white;
-  padding: 1.5em;
+  padding: 1.5rem;
   border-radius: 5px;
   text-align: left;
   margin-left: 2rem;
   flex-basis: 400px;
-  &__title {
-    margin: 0;
-    margin-bottom: 1rem;
-  }
   &__input {
     display: block;
     width: 100%;

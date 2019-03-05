@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import PlayerCell from '../components/PlayerCell'
 
 class Top10 extends React.Component {
   constructor() {
@@ -35,21 +36,27 @@ class Top10 extends React.Component {
   }
 
   render() {
-    return <section className='top10'>
-      <h2>Top 10 Players</h2>
-      { this.state.isFetching ? <p>Loading...</p> : null }
+    return <section className='leaderboard'>
+      <h2 className='leaderboard__title'>Top 10 Players</h2>
+      { this.state.isFetching ? <p className='leaderboard__loading'>Loading...</p> : null }
       { this.state.hasError ? <div className='error'>Could not fetch players</div> : null }
       { this.state.users.length > 0 ?
-        <ul className='list'>
+        <table className='table table--top10'>
+          <tr className='table__row'>
+            <th className='table__text'>Player</th>
+            <th className='table__num'>WPM</th>
+            <th className='table__num'>Wins</th>
+          </tr>
           {
             this.state.users.map((user, i) => (
-              <li key={i}>
-                <h3><b>{i + 1 + '. '}</b>{user.username}</h3>
-                <p>Wins: {user.stats.wins}</p>
-              </li>
+              <tr className='table__row table__row--content'>
+                <td className='table__text'>{user.username}</td>
+                <td className='table__num'>{user.stats.avgWpm.toFixed(2)}</td>
+                <td className='table__num'>{user.stats.wins}</td>
+              </tr>
             ))
           }
-        </ul>
+        </table>
         : null
       }
     </section>

@@ -22,7 +22,7 @@ const PlayerList = ({ clientId, playersById, textLength }) => (
           <li className='player-item' key={id}>
             <p className='player-item__name'>
               {player.place ? '(' + placeWord(player.place) + ') ' : null}
-              {id == clientId ? 'You' : player.username}
+              {id == clientId ? <b>You</b> : player.username}
               <span className='player-item__wpm'>{Math.round(player.wpm)} WPM</span>
             </p>
             <div className='progress'>

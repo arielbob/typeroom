@@ -17,7 +17,7 @@ const RoomHeader = ({ isRoomOpened, isCounting, isRunning, error }) => {
         </div> :
         null
       }
-      { !error && !isRoomOpened ? 'Loading...' : null}
+      { !error && !isRoomOpened ? <h2 className='game__loading'>Loading...</h2> : null}
       {error ? <ErrorMessage error={error} /> : null}
     </section>
   )

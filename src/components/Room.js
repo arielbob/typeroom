@@ -33,25 +33,33 @@ class Room extends React.Component {
           }
           <RoomHeader
             isRoomOpened={this.props.isRoomOpened}
-            isCounting={this.props.iscountin}
+            isCounting={this.props.isCounting}
             isRunning={this.props.isRunning}
             error={this.props.error}
           />
           <PlayerListContainer />
-          <section className='game__text-container'>
-            <GameTextContainer />
-            <TypeInputContainer />
-            {
-              !this.props.isJoined ?
-              <button className='game__join-btn btn btn--green' onClick={() => this.props.joinRoom()}>Join Room</button> :
-              null
-            }
-          </section>
+          {
+            this.props.isRoomOpened ?
+            <section className='game__text-container'>
+              <GameTextContainer />
+              <TypeInputContainer />
+              {
+                !this.props.isJoined ?
+                <button className='game__join-btn btn btn--green' onClick={() => this.props.joinRoom()}>Join Room</button> :
+                null
+              }
+            </section> :
+            null
+          }
         </div>
-        <div className='share'>
-          <p className='share__text'>Share this link with your friends!</p>
-          <input className='share__url' value={window.location.href} readOnly />
-        </div>
+        {
+          this.props.isRoomOpened ?
+          <div className='share'>
+            <p className='share__text'>Share this link with your friends!</p>
+            <input className='share__url' value={window.location.href} readOnly />
+          </div> :
+          null
+        }
       </div>
     )
   }

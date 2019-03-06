@@ -9,6 +9,10 @@
     background-color: #ffffff;
     border-radius: 5px;
     padding: 2rem;
+    margin-bottom: 1rem;
+  }
+  &__loading {
+    margin-bottom: 0;
   }
   &__text-container {
     background-color: #ffffff;
@@ -23,7 +27,8 @@
     }
   }
   &__timer {
-    height: 3em;
+    // height: 3em;
+    margin: 0;
   }
   &__input {
     width: 100%;

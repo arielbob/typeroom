@@ -10,6 +10,17 @@ export const error = (state = '', action) => {
   }
 }
 
+export const isRoomOpened = (state = false, action) => {
+  switch (action.type) {
+    case 'OPEN_ROOM_SUCCESS':
+      return true
+    case 'OPEN_ROOM_FAILURE':
+      return false
+    default:
+      return state
+  }
+}
+
 export const clientId = (state = null, action) => {
   switch (action.type) {
     case 'SET_CLIENT_ID':

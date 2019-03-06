@@ -98,6 +98,8 @@ io.on('connection', async (socket) => {
     return
   }
 
+  socket.emit('roomOpened')
+
   console.log(util.inspect(rooms, false, null, true))
 
   let playerId = null

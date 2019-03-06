@@ -11,7 +11,9 @@ import {
   startRace,
   endRace,
   leaveRoom,
-  setError
+  setError,
+  openRoomSuccess,
+  openRoomFailure
 } from './actions/gameActions'
 
 let socket = null
@@ -47,13 +49,15 @@ export const socketMiddleware = (store) => (next) => (action) => {
 const eventHandlers = {
   connect: (dispatch) => {
     console.log('connected to socket')
-    // dispatch(setClientId(socket.id))
   },
   connect_error: (dispatch) => {
     dispatch(setError('Could not connect to the room'))
   },
   reconnect_error: (dispatch) => {
     dispatch(setError('Could not reconnect to the room'))
+  },
+  roomOpened: (dispatch) => {
+    dispatch(openRoomSuccess())
   },
   clientInfo: (dispatch, state, id) => {
     console.log(id)
@@ -103,6 +107,7 @@ const eventHandlers = {
     let message = 'An error occurred...'
     if (error == 'roomNotFound') {
       message = 'The requested room could not be found'
+      dispatch(openRoomFailure())
     }
     dispatch(setError(message))
   }

@@ -25,6 +25,18 @@ export const setError = (error) => ({
   error
 })
 
+export const openRoomSuccess = () => {
+  return {
+    type: 'OPEN_ROOM_SUCCESS'
+  }
+}
+
+export const openRoomFailure = () => {
+  return {
+    type: 'OPEN_ROOM_FAILURE'
+  }
+}
+
 export const setInputValue = (inputValue) => (dispatch, getState) => {
   const spaceEntered = inputValue.charAt(inputValue.length - 1) === ' '
   const trimmedVal = inputValue.trim()
@@ -86,7 +98,7 @@ export const setInputValue = (inputValue) => (dispatch, getState) => {
 
     if ((player.nextWordId == gameText.split(' ').length - 1) && (inputValue == nextWord)) {
       dispatch(setNextWordId(clientId, player.nextWordId + 1))
-      
+
       dispatch({
         type: 'INPUT_WORD',
         payload: {

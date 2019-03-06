@@ -12,8 +12,8 @@ const RoomHeader = ({ isRoomOpened, isCounting, isRunning, error }) => {
       {
         isRoomOpened ?
         <div className='game__timers'>
-          { this.props.isCounting ? <CountdownTimer render={Countdown} /> : null }
-          { this.props.isRunning ? <RaceTimer render={(time) => <p className='game__timer'>{time}</p>} /> : null }
+          { isCounting ? <CountdownTimer render={Countdown} /> : null }
+          { isRunning ? <RaceTimer render={(time) => <p className='game__timer'>{time}</p>} /> : null }
         </div> :
         null
       }

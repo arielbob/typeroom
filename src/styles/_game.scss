@@ -5,6 +5,11 @@
 
 .game {
   margin-bottom: 1em;
+  &__header {
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 2rem;
+  }
   &__text-container {
     background-color: #ffffff;
     padding: 2rem;

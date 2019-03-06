@@ -15,6 +15,7 @@ export const isRoomOpened = (state = false, action) => {
     case 'OPEN_ROOM_SUCCESS':
       return true
     case 'OPEN_ROOM_FAILURE':
+    case 'CLOSE_ROOM':
       return false
     default:
       return state

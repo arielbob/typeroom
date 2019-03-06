@@ -34,10 +34,12 @@ class Room extends React.Component {
             // we shouldn't just have it say 0 by default since the race can end before the timer
             // reaches 0
           }
-          <div className='game__timers'>
-            { this.props.isCounting ? <CountdownTimer render={Countdown} /> : null }
-            { this.props.isRunning ? <RaceTimer render={(time) => <p className='game__timer'>{time}</p>} /> : null }
-          </div>
+          <section className='game__header'>
+            <div className='game__timers'>
+              { this.props.isCounting ? <CountdownTimer render={Countdown} /> : null }
+              { this.props.isRunning ? <RaceTimer render={(time) => <p className='game__timer'>{time}</p>} /> : null }
+            </div>
+          </section>
 
           <PlayerListContainer />
           <section className='game__text-container'>

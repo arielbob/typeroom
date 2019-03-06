@@ -18,11 +18,13 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 })
 
-const mapStateToProps = ({game: { isJoined, isCounting, isRunning }}, ownProps) => ({
+const mapStateToProps = ({game: { isRoomOpened, isJoined, isCounting, isRunning, error }}, ownProps) => ({
   roomId: ownProps.match.params.id,
+  isRoomOpened,
   isJoined,
   isCounting,
-  isRunning
+  isRunning,
+  error
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Room)

@@ -6,21 +6,21 @@ import Countdown from './Countdown'
 
 const RoomHeader = ({ isRoomOpened, isJoined, isCounting, isRunning, error, joinRoom }) => {
   return (
-    <section className='game__header'>
+    <section className='game-header'>
       {
         isRoomOpened && !isJoined ?
-        <button className='game__join-btn btn btn--green' onClick={() => joinRoom()}>Join Room</button> :
+        <button className='game-header__join-btn btn btn--green' onClick={() => joinRoom()}>Join Room</button> :
         null
       }
       {
         isRoomOpened ?
-        <div className='game__timers'>
+        <div className='game-header__timers'>
           { isCounting ? <CountdownTimer render={Countdown} /> : null }
-          { isRunning ? <RaceTimer render={(time) => <p className='game__timer'>{time}</p>} /> : null }
+          { isRunning ? <RaceTimer render={(time) => <p className='game-header__timer'>{time}</p>} /> : null }
         </div> :
         null
       }
-      { !error && !isRoomOpened ? <h2 className='game__loading'>Loading...</h2> : null}
+      { !error && !isRoomOpened ? <h2 className='game-header__loading'>Loading...</h2> : null}
       {error ? <ErrorMessage error={error} /> : null}
     </section>
   )

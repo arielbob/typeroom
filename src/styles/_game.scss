@@ -3,17 +3,18 @@
   max-width: 800px;
 }
 
-.game {
-  margin-bottom: 1em;
-  &__header {
-    background-color: #ffffff;
-    border-radius: 5px;
-    padding: 2rem;
-    margin-bottom: 1rem;
-  }
+.game-header {
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 2rem;
+  margin-bottom: 1rem;
   &__loading {
     margin-bottom: 0;
   }
+}
+
+.game {
+  margin-bottom: 1em;
   &__text-container {
     background-color: #ffffff;
     padding: 2rem;
@@ -40,8 +41,6 @@
     &--mistake {
       background-color: #eec4c4;
     }
-  }
-  &__join-btn {
   }
 }
 

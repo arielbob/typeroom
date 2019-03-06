@@ -4,11 +4,14 @@ import RaceTimer from '../containers/RaceTimer'
 import CountdownTimer from '../containers/CountdownTimer'
 import Countdown from './Countdown'
 
-// TODO: should maybe be a connected component
-
-const RoomHeader = ({ isRoomOpened, isCounting, isRunning, error }) => {
+const RoomHeader = ({ isRoomOpened, isJoined, isCounting, isRunning, error, joinRoom }) => {
   return (
     <section className='game__header'>
+      {
+        isRoomOpened && !isJoined ?
+        <button className='game__join-btn btn btn--green' onClick={() => joinRoom()}>Join Room</button> :
+        null
+      }
       {
         isRoomOpened ?
         <div className='game__timers'>

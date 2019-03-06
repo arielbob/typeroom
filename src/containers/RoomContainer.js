@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { openRoom, closeRoom, joinRoom } from '../actions/gameActions'
+import { openRoom, closeRoom } from '../actions/gameActions'
 import Room from '../components/Room'
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -12,18 +12,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   closeRoom: () => {
     dispatch(closeRoom())
-  },
-  joinRoom: () => {
-    dispatch(joinRoom())
   }
 })
 
 const mapStateToProps = ({game: { isRoomOpened, isJoined, isCounting, isRunning, error }}, ownProps) => ({
   roomId: ownProps.match.params.id,
   isRoomOpened,
-  isJoined,
-  isCounting,
-  isRunning,
   error
 })
 

@@ -1,7 +1,6 @@
 import React from 'react'
 
-import RoomHeader from './RoomHeader'
-
+import RoomHeaderContainer from '../containers/RoomHeaderContainer'
 import GameTextContainer from '../containers/GameTextContainer'
 import TypeInputContainer from '../containers/TypeInputContainer'
 import PlayerListContainer from '../containers/PlayerListContainer'
@@ -31,23 +30,13 @@ class Room extends React.Component {
             // we shouldn't just have it say 0 by default since the race can end before the timer
             // reaches 0
           }
-          <RoomHeader
-            isRoomOpened={this.props.isRoomOpened}
-            isCounting={this.props.isCounting}
-            isRunning={this.props.isRunning}
-            error={this.props.error}
-          />
+          <RoomHeaderContainer />
           <PlayerListContainer />
           {
             this.props.isRoomOpened ?
             <section className='game__text-container'>
               <GameTextContainer />
               <TypeInputContainer />
-              {
-                !this.props.isJoined ?
-                <button className='game__join-btn btn btn--green' onClick={() => this.props.joinRoom()}>Join Room</button> :
-                null
-              }
             </section> :
             null
           }

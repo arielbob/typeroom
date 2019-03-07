@@ -53,15 +53,20 @@
   }
 }
 
-
 .navbar {
   display: flex;
   background-color: white;
   justify-content: space-between;
   padding: 1em;
+  align-items: center;
+  a {
+    text-decoration: none;
+  }
   &__title {
     align-self: center;
     margin: 0;
+    color: #000000;
+    font-weight: bold;
   }
   &__nav {
     li {

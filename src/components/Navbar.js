@@ -4,7 +4,7 @@ import CreateRoomButton from '../containers/CreateRoomButton'
 
 const Navbar = () => (
   <header className='navbar'>
-    <Link to='/' className='navbar__title'>TypeRoom</Link>
+    <Link to='/'><p className='navbar__title'>TypeRoom</p></Link>
     <nav className='navbar__nav'>
       <ul>
         <li><CreateRoomButton /></li>

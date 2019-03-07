@@ -19,7 +19,7 @@ const formatTime = (secs) => {
 const RoomHeader = ({ isRoomOpened, isJoined, isCounting, isRunning, error, joinRoom }) => {
   return (
     <section className='game-header'>
-      <div className='game-header__container'>
+      <div className={'game-header__container' + ((isJoined && isRunning) ? ' game-header__container--right' : '')}>
         {
           isRoomOpened ?
           <div className='game-header__timers'>

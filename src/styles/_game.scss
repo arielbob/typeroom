@@ -16,6 +16,10 @@
   &__container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    &--right {
+      justify-content: flex-end;
+    }
   }
   &__timer {
     margin: 0;

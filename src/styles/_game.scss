@@ -4,12 +4,21 @@
 }
 
 .game-header {
+  position: relative;
   background-color: #ffffff;
   border-radius: 5px;
   padding: 2rem;
   margin-bottom: 1rem;
+  overflow: hidden;
   &__loading {
     margin-bottom: 0;
+  }
+  &__container {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__timer {
+    margin: 0;
   }
 }
 
@@ -26,10 +35,6 @@
     &--typed {
       background-color: yellow;
     }
-  }
-  &__timer {
-    // height: 3em;
-    margin: 0;
   }
   &__input {
     width: 100%;

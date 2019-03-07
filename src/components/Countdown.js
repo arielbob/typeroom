@@ -10,7 +10,7 @@ const Lights = ({ time }) => (
 
 const Countdown = (time) => (
   <div className='countdown'>
-    <p className='countdown__text'>{ (time > 0) ? 'Race starting in ' + time : 'GO!'}</p>
+    <h2 className='countdown__text'>{ (time > 0) ? 'Race starting in ' + time : 'GO!'}</h2>
     <Lights time={time} />
   </div>
 )

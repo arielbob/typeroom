@@ -15,7 +15,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 })
 
-const mapStateToProps = ({game: { isRoomOpened, isJoined, isCounting, isRunning, error }}, ownProps) => ({
+const mapStateToProps = ({game: { isRoomOpened, error }}, ownProps) => ({
   roomId: ownProps.match.params.id,
   isRoomOpened,
   error
